@@ -1,6 +1,6 @@
 
 
-# P7
+# Groupomania, a full stack social network
 
 This project was generated using [Nx](https://nx.dev).
 
