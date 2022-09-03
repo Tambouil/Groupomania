@@ -1,18 +1,29 @@
 import { useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
 import AuthHeader from '../components/AuthHeader'
 import AuthSubmit from '../components/AuthSubmit'
+import { loginSchema, LoginInput } from '../utils/validation'
 
 const Login = () => {
   const [passwordShown, setPasswordShown] = useState(false)
   const togglePasswordVisiblity = () => {
     setPasswordShown(passwordShown ? false : true)
   }
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginInput>({
+    resolver: yupResolver(loginSchema),
+  })
+
+  const onSubmit: SubmitHandler<LoginInput> = (data) => console.log(data)
   return (
     <>
       <AuthHeader headerText={'No account ?'} linkText={'Register'} linkTo={'/register'} />
       <form
-        action="#"
-        method="POST"
+        onSubmit={handleSubmit(onSubmit)}
         className="max-w-md mx-auto mt-8 mb-0 space-y-4 shadow-2xl p-8"
       >
         <div>
@@ -24,7 +35,9 @@ const Login = () => {
             type="email"
             className="border-2 border-gray-200 w-full p-4 pr-12 text-sm  rounded-lg shadow-sm"
             placeholder="Enter email"
+            {...register('email', { required: true })}
           />
+          <p>{errors.email?.message}</p>
         </div>
 
         <div>
@@ -36,6 +49,7 @@ const Login = () => {
               type={passwordShown ? 'text' : 'password'}
               className="w-full p-4 pr-12 text-sm border-2 border-gray-200 rounded-lg shadow-sm"
               placeholder="Enter password"
+              {...register('password', { required: true })}
             />
 
             <span
@@ -80,6 +94,7 @@ const Login = () => {
                 </svg>
               )}
             </span>
+            <p>{errors.password?.message}</p>
           </div>
         </div>
         <AuthSubmit submitText={'Login'} />

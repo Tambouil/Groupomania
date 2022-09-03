@@ -1,18 +1,29 @@
 import { useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
 import AuthHeader from '../components/AuthHeader'
 import AuthSubmit from '../components/AuthSubmit'
+import { RegisterInput, registerSchema } from '../utils/validation'
 
 const Register = () => {
   const [passwordShown, setPasswordShown] = useState(false)
   const togglePasswordVisiblity = () => {
     setPasswordShown(passwordShown ? false : true)
   }
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterInput>({
+    resolver: yupResolver(registerSchema),
+  })
+
+  const onSubmit: SubmitHandler<RegisterInput> = (data) => console.log(data)
   return (
     <>
       <AuthHeader headerText={'Already have an account ?'} linkText={'Login'} linkTo={'/login'} />
       <form
-        action="#"
-        method="POST"
+        onSubmit={handleSubmit(onSubmit)}
         className="max-w-md mx-auto mt-8 mb-0 space-y-4 shadow-2xl p-8"
       >
         <div>
@@ -24,7 +35,9 @@ const Register = () => {
             type="text"
             className="w-full p-4 pr-12 text-sm border-2 border-gray-200 rounded-lg shadow-sm"
             placeholder="Username"
+            {...register('username', { required: true })}
           />
+          <p>{errors.username?.message}</p>
         </div>
 
         <div>
@@ -36,7 +49,9 @@ const Register = () => {
             type="email"
             className="w-full p-4 pr-12 text-sm border-2 border-gray-200 rounded-lg shadow-sm"
             placeholder="Enter email"
+            {...register('email', { required: true })}
           />
+          <p>{errors.email?.message}</p>
         </div>
 
         <div>
@@ -48,6 +63,7 @@ const Register = () => {
               type={passwordShown ? 'text' : 'password'}
               className="w-full p-4 pr-12 text-sm border-2 border-gray-200 rounded-lg shadow-sm"
               placeholder="Enter password"
+              {...register('password', { required: true })}
             />
 
             <span
@@ -92,6 +108,7 @@ const Register = () => {
                 </svg>
               )}
             </span>
+            <p>{errors.password?.message}</p>
           </div>
         </div>
         <div>
@@ -103,6 +120,7 @@ const Register = () => {
               type={passwordShown ? 'text' : 'password'}
               className="w-full p-4 pr-12 text-sm border-2 border-gray-200 rounded-lg shadow-sm"
               placeholder="Enter password"
+              {...register('password_confirmation', { required: true })}
             />
 
             <span
@@ -147,9 +165,10 @@ const Register = () => {
                 </svg>
               )}
             </span>
+            <p>{errors.password_confirmation?.message}</p>
           </div>
         </div>
-        <AuthSubmit submitText={'Rrrrr'} />
+        <AuthSubmit submitText={'Register'} />
       </form>
     </>
   )
