@@ -1,5 +1,7 @@
-const Home = () => {
-  return <h1 className="bg-cyan-500">Hello World</h1>;
-};
+import Navbar from '../components/Navbar'
 
-export default Home;
+const Home = () => {
+  return <Navbar />
+}
+
+export default Home
