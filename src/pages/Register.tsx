@@ -37,7 +37,14 @@ const Register = () => {
             placeholder="Username"
             {...register('username', { required: true })}
           />
-          <p>{errors.username?.message}</p>
+          {errors.username && (
+            <div
+              className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+              role="alert"
+            >
+              {errors.username?.message}
+            </div>
+          )}
         </div>
 
         <div>
@@ -51,7 +58,14 @@ const Register = () => {
             placeholder="Enter email"
             {...register('email', { required: true })}
           />
-          <p>{errors.email?.message}</p>
+          {errors.email && (
+            <div
+              className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+              role="alert"
+            >
+              {errors.email?.message}
+            </div>
+          )}
         </div>
 
         <div>
@@ -108,7 +122,14 @@ const Register = () => {
                 </svg>
               )}
             </span>
-            <p>{errors.password?.message}</p>
+            {errors.password && (
+              <div
+                className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                role="alert"
+              >
+                {errors.password?.message}
+              </div>
+            )}
           </div>
         </div>
         <div>
@@ -165,7 +186,14 @@ const Register = () => {
                 </svg>
               )}
             </span>
-            <p>{errors.password_confirmation?.message}</p>
+            {errors.password_confirmation && (
+              <div
+                className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                role="alert"
+              >
+                {errors.password_confirmation?.message}
+              </div>
+            )}
           </div>
         </div>
         <AuthSubmit submitText={'Register'} />

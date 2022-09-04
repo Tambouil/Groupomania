@@ -33,11 +33,18 @@ const Login = () => {
 
           <input
             type="email"
-            className="border-2 border-gray-200 w-full p-4 pr-12 text-sm  rounded-lg shadow-sm"
+            className="border-2 border-gray-200 w-full p-4 pr-12 text-sm rounded-lg shadow-sm focus:border-gray-900"
             placeholder="Enter email"
             {...register('email', { required: true })}
           />
-          <p>{errors.email?.message}</p>
+          {errors.email && (
+            <div
+              className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+              role="alert"
+            >
+              {errors.email?.message}
+            </div>
+          )}
         </div>
 
         <div>
@@ -94,7 +101,14 @@ const Login = () => {
                 </svg>
               )}
             </span>
-            <p>{errors.password?.message}</p>
+            {errors.password && (
+              <div
+                className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                role="alert"
+              >
+                {errors.password?.message}
+              </div>
+            )}
           </div>
         </div>
         <AuthSubmit submitText={'Login'} />
