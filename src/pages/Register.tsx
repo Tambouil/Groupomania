@@ -18,7 +18,23 @@ const Register = () => {
     resolver: yupResolver(registerSchema),
   })
 
-  const onSubmit: SubmitHandler<RegisterInput> = (data) => console.log(data)
+  const onSubmit: SubmitHandler<RegisterInput> = async (data) => {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}api/auth/register`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    if (!response.ok) {
+      const errorDetails = await response.json()
+      throw new Error(
+        `${response.status} ${response.statusText} (${response.type}) : ${errorDetails.message}`
+      )
+    }
+    await response.json()
+  }
   return (
     <>
       <AuthHeader headerText={'Already have an account ?'} linkText={'Login'} linkTo={'/login'} />
@@ -172,15 +188,15 @@ const Register = () => {
                   stroke="currentColor"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                   />
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
                   />
                 </svg>

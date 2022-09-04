@@ -18,7 +18,17 @@ const Login = () => {
     resolver: yupResolver(loginSchema),
   })
 
-  const onSubmit: SubmitHandler<LoginInput> = (data) => console.log(data)
+  const onSubmit: SubmitHandler<LoginInput> = async (data) => {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}api/auth/login`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    await response.json()
+  }
   return (
     <>
       <AuthHeader headerText={'No account ?'} linkText={'Register'} linkTo={'/register'} />

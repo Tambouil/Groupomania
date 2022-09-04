@@ -1,8 +1,8 @@
-import { Route, Routes } from "react-router-dom";
-import AuthLayout from "./components/AuthLayout";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import { Route, Routes } from 'react-router-dom'
+import AuthLayout from './components/AuthLayout'
+import Home from './pages/Home'
+import Login from './pages/Login'
+import Register from './pages/Register'
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         </Route>
       </Routes>
     </>
-  );
+  )
 }
 
-export default App;
+export default App
