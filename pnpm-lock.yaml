@@ -16,6 +16,7 @@ specifiers:
   react-hook-form: ^7.34.2
   react-router-dom: ^6.3.0
   tailwindcss: ^3.1.8
+  timeago-react: ^3.0.5
   typescript: ^4.6.4
   vite: ^3.0.7
   yup: ^0.32.11
@@ -28,6 +29,7 @@ dependencies:
   react-dom: 18.2.0_react@18.2.0
   react-hook-form: 7.34.2_react@18.2.0
   react-router-dom: 6.3.0_biqbaboplfbrettd7655fr4n2y
+  timeago-react: 3.0.5_react@18.2.0
   yup: 0.32.11
 
 devDependencies:
@@ -1326,6 +1328,19 @@ packages:
       resolve: 1.22.1
     transitivePeerDependencies:
       - ts-node
+
+  /timeago-react/3.0.5_react@18.2.0:
+    resolution: {integrity: sha512-1k/aDt+ADpcABCmg3BIBuZSa7aSxolmuYFkdcpL7mlNkFcDAK/KwuxLf68gowhM7Oq3vWTE7LPeq3kLkSt45Jg==}
+    peerDependencies:
+      react: ^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+      timeago.js: 4.0.2
+    dev: false
+
+  /timeago.js/4.0.2:
+    resolution: {integrity: sha512-a7wPxPdVlQL7lqvitHGGRsofhdwtkoSXPGATFuSOA2i1ZNQEPLrGnj68vOp2sOJTCFAQVXPeNMX/GctBaO9L2w==}
+    dev: false
 
   /to-fast-properties/2.0.0:
     resolution: {integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==}

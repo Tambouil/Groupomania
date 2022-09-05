@@ -15,5 +15,10 @@ export const registerSchema = yup.object({
     .oneOf([yup.ref('password'), null]),
 })
 
+export const postSchema = yup.object({
+  content: yup.string().required().min(3).max(255),
+})
+
 export type LoginInput = yup.InferType<typeof loginSchema>
 export type RegisterInput = yup.InferType<typeof registerSchema>
+export type PostInput = yup.InferType<typeof postSchema>

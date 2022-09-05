@@ -29,6 +29,7 @@ const Login = () => {
     })
     await response.json()
   }
+
   return (
     <>
       <AuthHeader headerText={'No account ?'} linkText={'Register'} linkTo={'/register'} />
