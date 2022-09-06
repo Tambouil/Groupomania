@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import AuthHeader from '../components/AuthHeader'
 import AuthSubmit from '../components/AuthSubmit'
 import { loginSchema, LoginInput } from '../utils/validation'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
   const [passwordShown, setPasswordShown] = useState(false)
@@ -18,6 +19,8 @@ const Login = () => {
     resolver: yupResolver(loginSchema),
   })
 
+  const navigate = useNavigate()
+
   const onSubmit: SubmitHandler<LoginInput> = async (data) => {
     const response = await fetch(`${import.meta.env.VITE_API_URL}api/auth/login`, {
       method: 'POST',
@@ -28,6 +31,9 @@ const Login = () => {
       body: JSON.stringify(data),
     })
     await response.json()
+    if (response.ok) {
+      navigate('/')
+    }
   }
 
   return (
@@ -35,7 +41,7 @@ const Login = () => {
       <AuthHeader headerText={'No account ?'} linkText={'Register'} linkTo={'/register'} />
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="max-w-md mx-auto mt-8 mb-0 space-y-4 shadow-2xl p-8"
+        className="max-w-md p-8 mx-auto mt-8 mb-0 space-y-4 shadow-2xl"
       >
         <div>
           <label htmlFor="email" className="sr-only">
@@ -44,7 +50,7 @@ const Login = () => {
 
           <input
             type="email"
-            className="border-2 border-gray-200 w-full p-4 pr-12 text-sm rounded-lg shadow-sm focus:border-gray-900"
+            className="w-full p-4 pr-12 text-sm border-2 border-gray-200 rounded-lg shadow-sm focus:border-gray-900"
             placeholder="Enter email"
             {...register('email', { required: true })}
           />
@@ -72,7 +78,7 @@ const Login = () => {
 
             <span
               onClick={togglePasswordVisiblity}
-              className="absolute inset-y-0 inline-flex items-center right-4 cursor-pointer"
+              className="absolute inset-y-0 inline-flex items-center cursor-pointer right-4"
             >
               {passwordShown === true ? (
                 <svg

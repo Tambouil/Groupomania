@@ -7,7 +7,9 @@ const Feed = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}api/posts`)
+      const res = await fetch(`${import.meta.env.VITE_API_URL}api/posts`, {
+        credentials: 'include',
+      })
       const data = await res.json()
 
       if (res.ok) {
@@ -16,8 +18,6 @@ const Feed = () => {
     }
     fetchPosts()
   }, [])
-
-  console.log(posts)
 
   return (
     <div className="container mx-auto">

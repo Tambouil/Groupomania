@@ -40,7 +40,7 @@ const Register = () => {
       <AuthHeader headerText={'Already have an account ?'} linkText={'Login'} linkTo={'/login'} />
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="max-w-md mx-auto mt-8 mb-0 space-y-4 shadow-2xl p-8"
+        className="max-w-md p-8 mx-auto mt-8 mb-0 space-y-4 shadow-2xl"
       >
         <div>
           <label htmlFor="text" className="sr-only">
@@ -98,7 +98,7 @@ const Register = () => {
 
             <span
               onClick={togglePasswordVisiblity}
-              className="absolute inset-y-0 inline-flex items-center right-4 cursor-pointer"
+              className="absolute inset-y-0 inline-flex items-center cursor-pointer right-4"
             >
               {passwordShown === true ? (
                 <svg
@@ -162,7 +162,7 @@ const Register = () => {
 
             <span
               onClick={togglePasswordVisiblity}
-              className="absolute inset-y-0 inline-flex items-center right-4 cursor-pointer"
+              className="absolute inset-y-0 inline-flex items-center cursor-pointer right-4"
             >
               {passwordShown === true ? (
                 <svg
