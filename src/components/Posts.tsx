@@ -33,7 +33,10 @@ const Posts = ({ post }: Props) => {
         </div>
       </div>
       <div className="py-4">
-        <img className="w-full rounded-lg" src={post.thumbnail} />
+        <img
+          className="w-full rounded-lg"
+          src={`${import.meta.env.VITE_API_URL}${post.thumbnail?.url}`}
+        />
       </div>
       <p>{post.content}</p>
       <div className="py-4">

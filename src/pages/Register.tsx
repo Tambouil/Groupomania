@@ -19,7 +19,7 @@ const Register = () => {
   })
 
   const onSubmit: SubmitHandler<RegisterInput> = async (data) => {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}api/auth/register`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
       method: 'POST',
       credentials: 'include',
       headers: {

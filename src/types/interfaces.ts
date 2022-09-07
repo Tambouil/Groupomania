@@ -2,7 +2,9 @@ import { PostInput } from '../utils/validation'
 
 export interface PostData extends PostInput {
   id: number
-  thumbnail?: string
+  thumbnail: {
+    url: string
+  }
   created_at: string
   userId: number
 }
