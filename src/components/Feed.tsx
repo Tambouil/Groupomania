@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { PostData } from '../types/interfaces'
+import PostForm from './PostForm'
 import Posts from './Posts'
 
 const Feed = () => {
@@ -7,10 +8,11 @@ const Feed = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}api/posts`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts`, {
         credentials: 'include',
       })
       const data = await res.json()
+      console.log(data)
 
       if (res.ok) {
         setPosts(data)
@@ -21,7 +23,7 @@ const Feed = () => {
 
   return (
     <div className="container mx-auto">
-      <h1 className="mt-8 text-center font-bold text-2xl uppercase">Feed</h1>
+      <PostForm />
       {posts.length < 1 ? (
         <div className="mt-4 p-8 text-center border border-gray-200 rounded-lg">
           <h2 className="text-2xl font-medium">There's nothing here...</h2>
