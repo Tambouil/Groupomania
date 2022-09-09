@@ -4,19 +4,21 @@ import { PostInput, postSchema } from '../utils/validation'
 import { useEffect } from 'react'
 import AuthSubmit from './AuthSubmit'
 import FileInput from './FileInput'
+import { usePostsContext } from '../hooks/usePostsContext'
 
 export interface FormInput extends PostInput {
   thumbnailFile: FileList
 }
 
 const PostForm = () => {
+  const { dispatch } = usePostsContext()
   const {
     register,
     handleSubmit,
     control,
     watch,
     reset,
-    formState: { isSubmitSuccessful, errors },
+    formState: { errors },
   } = useForm<FormInput>({
     defaultValues: {
       content: '',
@@ -30,18 +32,18 @@ const PostForm = () => {
     formData.append('content', data.content)
     formData.append('thumbnailFile', data.thumbnailFile[0])
 
-    await fetch(`${import.meta.env.VITE_API_URL}/api/posts`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/posts`, {
       method: 'POST',
       credentials: 'include',
       body: formData,
     })
+    const post = await response.json()
+    if (response.ok) {
+      console.log('post created', post)
+      dispatch({ type: 'ADD_POST', payload: post })
+      reset()
+    }
   }
-  useEffect(() => {
-    reset({
-      content: '',
-      thumbnailFile: undefined,
-    })
-  }, [isSubmitSuccessful])
 
   return (
     <div className="p-4 mx-auto max-w-screen-xl sm:px-6 lg:px-8">
