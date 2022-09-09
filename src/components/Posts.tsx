@@ -8,7 +8,7 @@ interface Props {
 const Posts = ({ post }: Props) => {
   return (
     //   <!-- Card-->
-    <article className="mb-4 p-6 rounded-xl bg-white dark:bg-slate-800 flex flex-col bg-clip-border w-1/2 mx-auto">
+    <article className="mb-4 p-6 rounded-xl bg-white dark:bg-slate-800 flex flex-col  border border-slate-400 bg-clip-border w-1/2 mx-auto">
       <div className="flex pb-6 items-center justify-between">
         <div className="flex">
           <a className="inline-block mr-4" href="#">
@@ -69,9 +69,8 @@ const Posts = ({ post }: Props) => {
           </svg>
         </span>
       </div>
-      {/* <!-- Comments content --> */}
-      <div className="pt-6">
-        {/* <!-- Comment row --> */}
+
+      {/* <div className="pt-6">
         <div className="media flex pb-4">
           <a className="mr-4" href="#">
             <img
@@ -99,7 +98,7 @@ const Posts = ({ post }: Props) => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </article>
   )
 }
