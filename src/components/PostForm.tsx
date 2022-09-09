@@ -1,10 +1,11 @@
-import React from 'react'
-import FileInput from './FileInput'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { PostInput, postSchema } from '../utils/validation'
+import { useEffect } from 'react'
+import AuthSubmit from './AuthSubmit'
+import FileInput from './FileInput'
 
-interface FormInput extends PostInput {
+export interface FormInput extends PostInput {
   thumbnailFile: FileList
 }
 
@@ -14,7 +15,8 @@ const PostForm = () => {
     handleSubmit,
     control,
     watch,
-    formState: { errors },
+    reset,
+    formState: { isSubmitSuccessful, errors },
   } = useForm<FormInput>({
     defaultValues: {
       content: '',
@@ -23,18 +25,28 @@ const PostForm = () => {
   })
   const selectedFile = watch('thumbnailFile')
 
-  const onSubmit: SubmitHandler<FormInput> = (data) => {
-    const postData = data.thumbnailFile ? { ...data, thumbnail: data.thumbnailFile[0] } : data
-    console.log(postData)
+  const onSubmit: SubmitHandler<FormInput> = async (data) => {
+    const formData = new FormData()
+    formData.append('content', data.content)
+    formData.append('thumbnailFile', data.thumbnailFile[0])
+
+    await fetch(`${import.meta.env.VITE_API_URL}/api/posts`, {
+      method: 'POST',
+      credentials: 'include',
+      body: formData,
+    })
   }
+  useEffect(() => {
+    reset({
+      content: '',
+      thumbnailFile: undefined,
+    })
+  }, [isSubmitSuccessful])
 
   return (
     <div className="p-4 mx-auto max-w-screen-xl sm:px-6 lg:px-8">
       <div className="max-w-lg mx-auto">
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="p-8 mt-6 mb-0 rounded-lg shadow-2xl space-y-4"
-        >
+        <form onSubmit={handleSubmit(onSubmit)} className="p-8 rounded-lg shadow-2xl space-y-4">
           <label htmlFor="email" className="sr-only">
             Message
           </label>
@@ -60,16 +72,9 @@ const PostForm = () => {
               {...register('content')}
             />
           </div>
-          <div className="flex items-center justify-between">
-            <FileInput name="thumbnailFile" control={control} />
 
-            <button
-              type="submit"
-              className="block w-1/2 px-5 py-3 text-sm font-medium text-white bg-indigo-600 rounded-lg active:scale-95 hover:bg-indigo-700"
-            >
-              Submit
-            </button>
-          </div>
+          <FileInput name="thumbnailFile" control={control} />
+          <AuthSubmit submitText={'Submit'} />
         </form>
       </div>
     </div>

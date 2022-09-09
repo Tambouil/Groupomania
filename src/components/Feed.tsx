@@ -12,8 +12,6 @@ const Feed = () => {
         credentials: 'include',
       })
       const data = await res.json()
-      console.log(data)
-
       if (res.ok) {
         setPosts(data)
       }
