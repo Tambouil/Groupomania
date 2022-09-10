@@ -1,4 +1,4 @@
-import { PostInput } from '../utils/validation'
+import { PostInput, UserValues } from '../utils/validation'
 
 export interface PostData extends PostInput {
   id: number
@@ -6,5 +6,14 @@ export interface PostData extends PostInput {
     url: string
   }
   created_at: string
-  userId: number
+  user_id: number
+}
+
+export interface UserData extends UserValues {
+  id: number
+  avatar: {
+    url: string
+  }
+  role: number
+  created_at: string
 }

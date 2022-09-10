@@ -19,6 +19,11 @@ export const postSchema = yup.object({
   content: yup.string().required().min(3).max(255),
 })
 
+export const userSchema = yup.object({
+  username: yup.string().required().min(3).max(30),
+})
+
 export type LoginInput = yup.InferType<typeof loginSchema>
 export type RegisterInput = yup.InferType<typeof registerSchema>
 export type PostInput = yup.InferType<typeof postSchema>
+export type UserValues = yup.InferType<typeof userSchema>

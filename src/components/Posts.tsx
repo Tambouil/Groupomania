@@ -1,31 +1,60 @@
+import { useEffect, useState } from 'react'
 import TimeAgo from 'timeago-react'
-import { PostData } from '../types/interfaces'
+import { PostData, UserData } from '../types/interfaces'
 
 interface Props {
   post: PostData
 }
 
 const Posts = ({ post }: Props) => {
+  const [user, setUser] = useState<UserData>()
+  const isAdmin = user?.role === 0
+
+  const getUserById = async (id: number) => {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users/${post.user_id}`, {
+      credentials: 'include',
+    })
+    const data = await res.json()
+    if (res.ok) {
+      console.log(data)
+      setUser(data)
+    }
+  }
+
+  useEffect(() => {
+    getUserById(post.user_id)
+  }, [])
+
   return (
     //   <!-- Card-->
-    <article className="mb-4 p-6 rounded-xl bg-white dark:bg-slate-800 flex flex-col  border border-slate-400 bg-clip-border w-1/2 mx-auto">
-      <div className="flex pb-6 items-center justify-between">
+    <article className="mb-4 p-6 rounded-xl bg-white dark:bg-slate-800 flex flex-col  border border-slate-400 bg-clip-border w-3/4 mx-auto">
+      <div className="flex pb-6 items-center justify-between max-w-lg">
         <div className="flex">
           <a className="inline-block mr-4" href="#">
             <img
               className="rounded-full max-w-none w-14 h-14"
-              src="https://randomuser.me/api/portraits/women/9.jpg"
+              src="https://placeimg.com/80/80/people"
             />
           </a>
           <div className="flex flex-col">
             <div className="flex items-center">
               <a className="inline-block text-lg font-bold mr-2" href="#">
-                Esther Howard
+                {user?.username}
               </a>
               <span>
-                <svg className="fill-blue-500 dark:fill-slate-50 w-5 h-5" viewBox="0 0 24 24">
-                  <path d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"></path>
-                </svg>
+                {isAdmin && (
+                  <svg
+                    className="w-4 h-4 fill-blue-500 dark:fill-slate-50 "
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                )}
               </span>
             </div>
             <TimeAgo datetime={post.created_at} />
@@ -72,31 +101,31 @@ const Posts = ({ post }: Props) => {
 
       {/* <div className="pt-6">
         <div className="media flex pb-4">
-          <a className="mr-4" href="#">
-            <img
-              className="rounded-full max-w-none w-12 h-12"
-              src="https://randomuser.me/api/portraits/men/83.jpg"
-            />
-          </a>
-          <div className="media-body">
-            <div>
-              <a className="inline-block text-base font-bold mr-2" href="#">
-                Ronald Richards
-              </a>
-              <span className="text-slate-500 dark:text-slate-300">25 minutes ago</span>
-            </div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod 😀😀😀</p>
-            <div className="mt-2 flex items-center">
-              <a className="inline-flex items-center py-2 mr-3" href="#">
-                <span className="mr-2">
-                  <svg className="fill-rose-600 dark:fill-rose-400 w-6 h-6" viewBox="0 0 24 24">
-                    <path d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"></path>
-                  </svg>
-                </span>
-                <span className="text-base font-bold">2</span>
-              </a>
-            </div>
-          </div>
+        <a className="mr-4" href="#">
+        <img
+        className="rounded-full max-w-none w-12 h-12"
+        src="https://randomuser.me/api/portraits/men/83.jpg"
+        />
+        </a>
+        <div className="media-body">
+        <div>
+        <a className="inline-block text-base font-bold mr-2" href="#">
+        Ronald Richards
+        </a>
+        <span className="text-slate-500 dark:text-slate-300">25 minutes ago</span>
+        </div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod 😀😀😀</p>
+        <div className="mt-2 flex items-center">
+        <a className="inline-flex items-center py-2 mr-3" href="#">
+        <span className="mr-2">
+        <svg className="fill-rose-600 dark:fill-rose-400 w-6 h-6" viewBox="0 0 24 24">
+        <path d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"></path>
+        </svg>
+        </span>
+        <span className="text-base font-bold">2</span>
+        </a>
+        </div>
+        </div>
         </div>
       </div> */}
     </article>
