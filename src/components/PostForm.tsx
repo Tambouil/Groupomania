@@ -46,39 +46,37 @@ const PostForm = () => {
   }
 
   return (
-    <div className="p-4 mx-auto max-w-screen-xl sm:px-6 lg:px-8">
-      <div className="max-w-lg mx-auto">
-        <form onSubmit={handleSubmit(onSubmit)} className="p-8 rounded-lg shadow-2xl space-y-4">
-          <label htmlFor="email" className="sr-only">
-            Message
-          </label>
-          {errors.content && (
-            <div
-              className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
-              role="alert"
-            >
-              {errors.content?.message}
-            </div>
-          )}
-
-          {selectedFile && (
-            <div className="flex items-center justify-center w-full h-64 mt-4 overflow-hidden bg-gray-100 rounded-lg">
-              <img src={URL.createObjectURL(selectedFile[0])} alt="" />
-            </div>
-          )}
-          <div className="relative mt-1">
-            <input
-              type="text"
-              className="w-full p-4 pr-12 text-sm border-gray-200 rounded-lg shadow-sm"
-              placeholder="What's on your mind?"
-              {...register('content')}
-            />
+    <div className="p-4 mx-auto w-3/4 sm:px-6 lg:px-8">
+      <form onSubmit={handleSubmit(onSubmit)} className="p-8 rounded-lg shadow-2xl space-y-4">
+        <label htmlFor="email" className="sr-only">
+          Message
+        </label>
+        {errors.content && (
+          <div
+            className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+            role="alert"
+          >
+            {errors.content?.message}
           </div>
+        )}
 
-          <FileInput name="thumbnailFile" control={control} />
-          <AuthSubmit submitText={'Submit'} />
-        </form>
-      </div>
+        {selectedFile && (
+          <div className="flex items-center justify-center w-full h-64 mt-4 overflow-hidden bg-gray-100 rounded-lg">
+            <img src={URL.createObjectURL(selectedFile[0])} alt="" />
+          </div>
+        )}
+        <div className="relative mt-1">
+          <input
+            type="text"
+            className="w-full p-4 pr-12 text-sm border-gray-200 rounded-lg shadow-sm"
+            placeholder="What's on your mind?"
+            {...register('content')}
+          />
+        </div>
+
+        <FileInput name="thumbnailFile" control={control} />
+        <AuthSubmit submitText={'Submit'} />
+      </form>
     </div>
   )
 }
