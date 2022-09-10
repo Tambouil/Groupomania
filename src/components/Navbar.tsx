@@ -1,4 +1,17 @@
+import { useNavigate } from 'react-router-dom'
+
 const Navbar = () => {
+  const navigate = useNavigate()
+  const logout = async () => {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/logout`, {
+      method: 'POST',
+      credentials: 'include',
+    })
+    if (response.ok) {
+      navigate('/login')
+    }
+  }
+
   return (
     <div className="navbar bg-base-100">
       <div className="flex-1">
@@ -25,7 +38,7 @@ const Navbar = () => {
               <a>Settings</a>
             </li>
             <li>
-              <a>Logout</a>
+              <button onClick={logout}>Logout</button>
             </li>
           </ul>
         </div>
