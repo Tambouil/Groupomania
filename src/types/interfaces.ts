@@ -2,7 +2,7 @@ import { PostInput, UserValues } from '../utils/validation'
 
 export interface PostData extends PostInput {
   id: number
-  thumbnail: {
+  thumbnail?: {
     url: string
   }
   created_at: string
@@ -11,7 +11,8 @@ export interface PostData extends PostInput {
 
 export interface UserData extends UserValues {
   id: number
-  avatar: {
+  username: string
+  avatar?: {
     url: string
   }
   role: number
