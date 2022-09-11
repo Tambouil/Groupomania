@@ -6,6 +6,7 @@ import FileInput from './FileInput'
 import { usePostsContext } from '../hooks/usePostsContext'
 import { PostData, UserData } from '../types/interfaces'
 import { PostInput, postSchema } from '../utils/validation'
+import Avatar from './Avatar'
 
 interface Props {
   post?: PostData
@@ -121,15 +122,10 @@ const Posts = ({ post }: Props) => {
     <article className="mb-4 p-6 rounded-xl bg-white dark:bg-slate-800 flex flex-col  border border-slate-400 bg-clip-border w-3/4 mx-auto">
       <div className="flex pb-6 items-center justify-between">
         <div className="flex">
-          <a className="inline-block mr-4" href="#">
-            <img
-              className="rounded-full max-w-none w-14 h-14"
-              src="https://placeimg.com/80/80/people"
-            />
-          </a>
           <div className="flex flex-col">
             <div className="flex items-center">
-              <a className="inline-block text-lg font-bold mr-2" href="#">
+              <Avatar />
+              <a className="inline-block text-lg font-bold ml-4 mr-2" href="#">
                 {user?.username}
               </a>
               {isAdmin && (
@@ -215,21 +211,23 @@ const Posts = ({ post }: Props) => {
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 {post?.thumbnail ? (
-                  <span onClick={handleDeleteThumbnail} className="btn btn-ghost">
-                    <span className="flex items-center">
-                      <svg
-                        className="w-4 h-4 fill-blue-500 dark:fill-slate-50 "
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      <span className="ml-2">Remove Photo</span>
-                    </span>
+                  <span onClick={handleDeleteThumbnail} className="btn gap-2">
+                    <span>Remove Photo</span>
+
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-4 h-4 fill-blue-500 dark:fill-slate-50 "
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
                   </span>
                 ) : (
                   <FileInput name="thumbnailFile" control={control} />
@@ -237,17 +235,16 @@ const Posts = ({ post }: Props) => {
               </div>
               {post ? (
                 <div className="flex items-center">
-                  <button type="submit" className="btn btn-accent" disabled={isSubmitting}>
-                    {isSubmitting ? 'Saving...' : 'Save'}
-                  </button>
                   <button
-                    type="button"
-                    className="btn btn-ghost"
+                    className="btn btn-outline btn-ghost mr-2"
                     onClick={() => {
                       setUpdateMode(false), reset()
                     }}
                   >
                     Cancel
+                  </button>
+                  <button type="submit" className="btn btn-accent" disabled={isSubmitting}>
+                    {isSubmitting ? 'Saving...' : 'Save'}
                   </button>
                 </div>
               ) : (
