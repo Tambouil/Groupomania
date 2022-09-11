@@ -1,28 +1,16 @@
-import { useEffect } from 'react'
-import { usePostsContext } from '../hooks/usePostsContext'
-import PostForm from './PostForm'
+import { PropsWithChildren } from 'react'
+import { PostData } from '../types/interfaces'
 import Posts from './Posts'
 
-const Feed = () => {
-  const { state, dispatch } = usePostsContext()
+interface Props {
+  posts: PostData[]
+}
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts`, {
-        credentials: 'include',
-      })
-      const data = await res.json()
-      if (res.ok) {
-        dispatch({ type: 'SET_POSTS', payload: data })
-      }
-    }
-    fetchPosts()
-  }, [])
-
+const Feed = ({ posts, children }: PropsWithChildren<Props>) => {
   return (
     <div className="container mx-auto">
-      <PostForm />
-      {state.posts.length < 1 ? (
+      {children}
+      {posts.length < 1 ? (
         <div className="mt-4 p-8 text-center border border-gray-200 rounded-lg">
           <h2 className="text-2xl font-medium">There's nothing here...</h2>
 
@@ -31,7 +19,7 @@ const Feed = () => {
           </p>
         </div>
       ) : (
-        state.posts.map((post) => <Posts key={post.id} post={post} />)
+        posts.map((post: PostData) => <Posts key={post.id} post={post} />)
       )}
     </div>
   )
