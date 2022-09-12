@@ -63,7 +63,6 @@ const Posts = ({ post }: Props) => {
     })
     const post = await response.json()
     if (response.ok) {
-      console.log('post created', post)
       dispatch({ type: 'ADD_POST', payload: post })
       reset()
     }
@@ -81,7 +80,6 @@ const Posts = ({ post }: Props) => {
     })
     const json = await response.json()
     if (response.ok) {
-      console.log('post updated', post)
       dispatch({ type: 'UPDATE_POST', payload: json })
       setUpdateMode(false)
     }
@@ -124,7 +122,7 @@ const Posts = ({ post }: Props) => {
         <div className="flex">
           <div className="flex flex-col">
             <div className="flex items-center">
-              <Avatar />
+              <Avatar user={user} />
               <a className="inline-block text-lg font-bold ml-4 mr-2" href="#">
                 {user?.username}
               </a>
@@ -149,7 +147,7 @@ const Posts = ({ post }: Props) => {
 
         {!updateMode && (
           <div className="dropdown dropdown-end">
-            <label tabIndex={0} className="btn m-1">
+            <label tabIndex={0} className="btn btn-square">
               ...
             </label>
             <ul
@@ -238,7 +236,7 @@ const Posts = ({ post }: Props) => {
                   <button
                     className="btn btn-outline btn-ghost mr-2"
                     onClick={() => {
-                      setUpdateMode(false), reset()
+                      reset(), setUpdateMode(false)
                     }}
                   >
                     Cancel
