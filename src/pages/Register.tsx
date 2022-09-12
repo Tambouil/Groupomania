@@ -4,12 +4,14 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import AuthHeader from '../components/AuthHeader'
 import AuthSubmit from '../components/AuthSubmit'
 import { RegisterInput, registerSchema } from '../utils/validation'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const Register = () => {
   const [passwordShown, setPasswordShown] = useState(false)
   const togglePasswordVisiblity = () => {
     setPasswordShown(passwordShown ? false : true)
   }
+  const { dispatch } = useAuthContext()
   const {
     register,
     handleSubmit,
@@ -27,13 +29,11 @@ const Register = () => {
       },
       body: JSON.stringify(data),
     })
-    if (!response.ok) {
-      const errorDetails = await response.json()
-      throw new Error(
-        `${response.status} ${response.statusText} (${response.type}) : ${errorDetails.message}`
-      )
+    const json = await response.json()
+
+    if (response.ok) {
+      dispatch({ type: 'LOGIN', payload: json })
     }
-    await response.json()
   }
   return (
     <>

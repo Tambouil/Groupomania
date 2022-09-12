@@ -1,7 +1,9 @@
 import { useEffect } from 'react'
+import { Navigate } from 'react-router-dom'
 import Feed from '../components/Feed'
 import Navbar from '../components/Navbar'
 import Posts from '../components/Posts'
+import { useAuthContext } from '../hooks/useAuthContext'
 import { usePostsContext } from '../hooks/usePostsContext'
 
 const Home = () => {

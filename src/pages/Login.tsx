@@ -4,9 +4,10 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import AuthHeader from '../components/AuthHeader'
 import AuthSubmit from '../components/AuthSubmit'
 import { loginSchema, LoginInput } from '../utils/validation'
-import { useNavigate } from 'react-router-dom'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const Login = () => {
+  const { dispatch } = useAuthContext()
   const [passwordShown, setPasswordShown] = useState(false)
   const togglePasswordVisiblity = () => {
     setPasswordShown(passwordShown ? false : true)
@@ -19,8 +20,6 @@ const Login = () => {
     resolver: yupResolver(loginSchema),
   })
 
-  const navigate = useNavigate()
-
   const onSubmit: SubmitHandler<LoginInput> = async (data) => {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
       method: 'POST',
@@ -30,9 +29,9 @@ const Login = () => {
       },
       body: JSON.stringify(data),
     })
-    await response.json()
+    const json = await response.json()
     if (response.ok) {
-      navigate('/')
+      dispatch({ type: 'LOGIN', payload: json })
     }
   }
 

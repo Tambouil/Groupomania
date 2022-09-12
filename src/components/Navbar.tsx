@@ -1,14 +1,14 @@
-import { useNavigate } from 'react-router-dom'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const Navbar = () => {
-  const navigate = useNavigate()
+  const { state, dispatch } = useAuthContext()
   const logout = async () => {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/logout`, {
       method: 'POST',
       credentials: 'include',
     })
     if (response.ok) {
-      navigate('/login')
+      dispatch({ type: 'LOGOUT' })
     }
   }
 
@@ -29,16 +29,16 @@ const Navbar = () => {
             className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
           >
             <li>
-              <a className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </a>
+              <a className="justify-between">Profile</a>
             </li>
             <li>
               <a>Settings</a>
             </li>
             <li>
-              <button onClick={logout}>Logout</button>
+              <button onClick={logout}>
+                Logout
+                <span className="badge">{state.user?.username}</span>
+              </button>
             </li>
           </ul>
         </div>
