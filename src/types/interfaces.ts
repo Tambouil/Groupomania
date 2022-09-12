@@ -11,7 +11,6 @@ export interface PostData extends PostInput {
 
 export interface UserData extends UserValues {
   id: number
-  username: string
   avatar?: {
     url: string
   }
