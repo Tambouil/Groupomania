@@ -7,6 +7,7 @@ import { usePostsContext } from '../hooks/usePostsContext'
 import { PostData, UserData } from '../types/interfaces'
 import { PostInput, postSchema } from '../utils/validation'
 import Avatar from './Avatar'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 interface Props {
   post?: PostData
@@ -17,6 +18,7 @@ interface FormInput extends PostInput {
 
 const Posts = ({ post }: Props) => {
   const { dispatch } = usePostsContext()
+  const { state } = useAuthContext()
   const {
     register,
     handleSubmit,
@@ -31,10 +33,12 @@ const Posts = ({ post }: Props) => {
     resolver: yupResolver(postSchema),
   })
 
-  const thumbnailToUpload = watch('thumbnailFile')
   const [updateMode, setUpdateMode] = useState(!post)
   const [user, setUser] = useState<UserData>()
-  const isAdmin = user?.role === 0
+  const thumbnailToUpload = watch('thumbnailFile')
+  const authUser = state.user
+  const isAuthor = authUser?.id === post?.user_id
+  const isAdmin = authUser?.role === 0
 
   const getUserById = async (id: number) => {
     const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users/${id}`, {
@@ -100,50 +104,29 @@ const Posts = ({ post }: Props) => {
   return (
     <article className="mb-4 p-6 rounded-xl bg-white dark:bg-slate-800 flex flex-col  border border-slate-400 bg-clip-border w-3/4 mx-auto">
       <div className="flex pb-6 items-center justify-between">
-        <div className="flex">
-          <div className="flex flex-col">
-            <div className="flex items-center">
-              <Avatar user={user} />
-              <a className="inline-block text-lg font-bold ml-4 mr-2" href="#">
-                {user?.username}
-              </a>
-              {isAdmin && (
-                <span>
-                  <svg
-                    className="w-4 h-4 fill-blue-500 dark:fill-slate-50 "
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </span>
-              )}
-            </div>
+        <Avatar user={user} />
+        <div className="flex flex-col">
+          <div className="flex items-center">
+            {(isAuthor || isAdmin) && (
+              <div className="dropdown dropdown-end">
+                <label tabIndex={0} className="btn btn-square">
+                  ...
+                </label>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+                >
+                  <li>
+                    <span onClick={() => setUpdateMode(true)}>Edit</span>
+                  </li>
+                  <li>
+                    <span onClick={handleDelete}>Delete</span>
+                  </li>
+                </ul>
+              </div>
+            )}
           </div>
         </div>
-
-        {!updateMode && (
-          <div className="dropdown dropdown-end">
-            <label tabIndex={0} className="btn btn-square">
-              ...
-            </label>
-            <ul
-              tabIndex={0}
-              className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
-            >
-              <li>
-                <span onClick={() => setUpdateMode(true)}>Edit</span>
-              </li>
-              <li>
-                <span onClick={handleDelete}>Delete</span>
-              </li>
-            </ul>
-          </div>
-        )}
       </div>
       {(thumbnailToUpload || post?.thumbnail) && (
         <div className="py-4">
