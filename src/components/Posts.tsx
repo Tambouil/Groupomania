@@ -51,68 +51,49 @@ const Posts = ({ post }: Props) => {
     }
   }, [])
 
-  const createPost = async (data: FormInput) => {
-    const formData = new FormData()
-    formData.append('content', data.content)
-    formData.append('thumbnailFile', data.thumbnailFile[0])
-
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/posts`, {
-      method: 'POST',
-      credentials: 'include',
-      body: formData,
-    })
-    const post = await response.json()
-    if (response.ok) {
-      dispatch({ type: 'ADD_POST', payload: post })
-      reset()
-    }
-  }
-
-  const updatePost = async (id: number, data: FormInput) => {
+  const onSubmit: SubmitHandler<FormInput> = async (data) => {
     const formData = new FormData()
     formData.append('content', data.content)
     data.thumbnailFile && formData.append('thumbnailFile', data.thumbnailFile[0])
-
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${id}`, {
-      method: 'PATCH',
-      credentials: 'include',
-      body: formData,
-    })
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/posts/${post ? post.id : ''}`,
+      {
+        method: post ? 'PATCH' : 'POST',
+        credentials: 'include',
+        body: formData,
+      }
+    )
     const json = await response.json()
     if (response.ok) {
-      dispatch({ type: 'UPDATE_POST', payload: json })
-      setUpdateMode(false)
-    }
-  }
-
-  const handleDeleteThumbnail = async () => {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${post?.id}/thumbnail`, {
-      method: 'DELETE',
-      credentials: 'include',
-    })
-    const data = await res.json()
-    if (res.ok) {
-      dispatch({ type: 'UPDATE_POST', payload: data })
+      dispatch({ type: post ? 'UPDATE_POST' : 'ADD_POST', payload: json })
+      reset({ content: json?.content || '' })
+      post && setUpdateMode(false)
     }
   }
 
   const handleDelete = async () => {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${post?.id}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${post?.id}`, {
       method: 'DELETE',
       credentials: 'include',
     })
-    const data = await res.json()
-    if (res.ok) {
-      dispatch({ type: 'DELETE_POST', payload: data })
+    const json = await response.json()
+    if (response.ok) {
+      dispatch({ type: 'DELETE_POST', payload: json })
     }
   }
 
-  const onSubmit: SubmitHandler<FormInput> = async (data) => {
-    if (post) {
-      await updatePost(post.id, data)
-      setUpdateMode(false)
-    } else {
-      await createPost(data)
+  const handleDeleteThumbnail = async () => {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/posts/${post?.id}/thumbnail`,
+      {
+        method: 'DELETE',
+        credentials: 'include',
+      }
+    )
+    const json = await response.json()
+
+    if (response.ok) {
+      dispatch({ type: 'UPDATE_POST', payload: json })
     }
   }
 
@@ -209,9 +190,8 @@ const Posts = ({ post }: Props) => {
             <div className="flex items-center justify-between">
               <div className="flex items-center">
                 {post?.thumbnail ? (
-                  <span onClick={handleDeleteThumbnail} className="btn gap-2">
+                  <button className="btn gap-2" onClick={handleDeleteThumbnail}>
                     <span>Remove Photo</span>
-
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="w-4 h-4 fill-blue-500 dark:fill-slate-50 "
@@ -226,7 +206,7 @@ const Posts = ({ post }: Props) => {
                         d="M6 18L18 6M6 6l12 12"
                       />
                     </svg>
-                  </span>
+                  </button>
                 ) : (
                   <FileInput name="thumbnailFile" control={control} />
                 )}
