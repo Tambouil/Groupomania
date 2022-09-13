@@ -8,6 +8,7 @@ import { useAuthContext } from '../hooks/useAuthContext'
 
 const Register = () => {
   const [passwordShown, setPasswordShown] = useState(false)
+  const [error, setError] = useState(null)
   const togglePasswordVisiblity = () => {
     setPasswordShown(passwordShown ? false : true)
   }
@@ -30,7 +31,9 @@ const Register = () => {
       body: JSON.stringify(data),
     })
     const json = await response.json()
-
+    if (!response.ok) {
+      setError(json.messages.errors[0].message)
+    }
     if (response.ok) {
       dispatch({ type: 'LOGIN', payload: json })
     }
@@ -212,6 +215,14 @@ const Register = () => {
             )}
           </div>
         </div>
+        {error && (
+          <div
+            className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+            role="alert"
+          >
+            {error}
+          </div>
+        )}
         <AuthSubmit submitText={'Register'} />
       </form>
     </>

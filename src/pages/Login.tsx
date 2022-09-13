@@ -9,6 +9,7 @@ import { useAuthContext } from '../hooks/useAuthContext'
 const Login = () => {
   const { dispatch } = useAuthContext()
   const [passwordShown, setPasswordShown] = useState(false)
+  const [error, setError] = useState('')
   const togglePasswordVisiblity = () => {
     setPasswordShown(passwordShown ? false : true)
   }
@@ -30,6 +31,10 @@ const Login = () => {
       body: JSON.stringify(data),
     })
     const json = await response.json()
+    if (!response.ok) {
+      console.log(json)
+      setError('Invalid credentials')
+    }
     if (response.ok) {
       dispatch({ type: 'LOGIN', payload: json })
     }
@@ -127,6 +132,14 @@ const Login = () => {
             )}
           </div>
         </div>
+        {error && (
+          <div
+            className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+            role="alert"
+          >
+            {error}
+          </div>
+        )}
         <AuthSubmit submitText={'Login'} />
       </form>
     </>
