@@ -32,7 +32,6 @@ const Login = () => {
     })
     const json = await response.json()
     if (!response.ok) {
-      console.log(json)
       setError('Invalid credentials')
     }
     if (response.ok) {
