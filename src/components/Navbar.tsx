@@ -18,6 +18,7 @@ const Navbar = () => {
         <a className="btn btn-ghost normal-case text-xl">Groupomania</a>
       </div>
       <div className="flex-none gap-2">
+        <span className="badge">{state.user?.username}</span>
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
@@ -35,10 +36,7 @@ const Navbar = () => {
               <a>Settings</a>
             </li>
             <li>
-              <button onClick={logout}>
-                Logout
-                <span className="badge">{state.user?.username}</span>
-              </button>
+              <button onClick={logout}>Logout</button>
             </li>
           </ul>
         </div>
