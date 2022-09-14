@@ -4,10 +4,11 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import TimeAgo from 'timeago-react'
 import FileInput from './FileInput'
 import { usePostsContext } from '../hooks/usePostsContext'
-import { PostData, UserData } from '../types/interfaces'
+import { LikeData, PostData, UserData } from '../types/interfaces'
 import { PostInput, postSchema } from '../utils/validation'
 import Avatar from './Avatar'
 import { useAuthContext } from '../hooks/useAuthContext'
+import Like from './Like'
 
 interface Props {
   post?: PostData
@@ -35,6 +36,8 @@ const Posts = ({ post }: Props) => {
 
   const [updateMode, setUpdateMode] = useState(!post)
   const [user, setUser] = useState<UserData>()
+  const [isLiked, setIsLiked] = useState(false)
+  const [countLikes, setCountLikes] = useState(0)
   const thumbnailToUpload = watch('thumbnailFile')
   const authUser = state.user
   const isAuthor = authUser?.id === post?.user_id
@@ -52,6 +55,7 @@ const Posts = ({ post }: Props) => {
   useEffect(() => {
     if (post) {
       getUserById(post.user_id)
+      likes(post.id)
     }
   }, [])
 
@@ -70,7 +74,7 @@ const Posts = ({ post }: Props) => {
     const json = await response.json()
     if (response.ok) {
       dispatch({ type: post ? 'UPDATE_POST' : 'ADD_POST', payload: json })
-      reset({ content: json?.content || '' })
+      post ? reset({ content: json.content }) : reset({ content: '' })
       post && setUpdateMode(false)
     }
   }
@@ -101,16 +105,48 @@ const Posts = ({ post }: Props) => {
     }
   }
 
+  const likes = async (id: number) => {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${id}/likes`, {
+      credentials: 'include',
+    })
+    const json = await response.json()
+    if (response.ok) {
+      json.map((like: LikeData) => {
+        if (like.user_id === authUser?.id) {
+          setIsLiked(true)
+        } else {
+          setIsLiked(false)
+        }
+      })
+      if (json.length === 0) {
+        setIsLiked(false)
+      }
+      setCountLikes(json.length)
+    }
+  }
+
+  const handleLike = async () => {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${post?.id}/likes`, {
+      method: 'POST',
+      credentials: 'include',
+    })
+    const json = await response.json()
+    if (response.ok) {
+      dispatch({ type: 'UPDATE_POST', payload: json })
+      post && likes(post.id)
+    }
+  }
+
   return (
     <article className="mb-4 p-6 rounded-xl bg-white dark:bg-slate-800 flex flex-col  border border-slate-400 bg-clip-border w-3/4 mx-auto">
       <div className="flex pb-6 items-center justify-between">
         <Avatar user={user} />
         <div className="flex flex-col">
           <div className="flex items-center">
-            {(isAuthor || isAdmin) && (
+            {!updateMode && (isAuthor || isAdmin) && (
               <div className="dropdown dropdown-end">
                 <label tabIndex={0} className="btn btn-square">
-                  ...
+                  ☰
                 </label>
                 <ul
                   tabIndex={0}
@@ -223,14 +259,7 @@ const Posts = ({ post }: Props) => {
             <div className="divider"></div>
             <div className="pb-4 flex justify-between">
               <TimeAgo datetime={post.created_at} />
-              <a className="inline-flex items-center" href="#">
-                <span className="mr-2">
-                  <svg className="fill-rose-600 dark:fill-rose-400 w-6 h-6" viewBox="0 0 24 24">
-                    <path d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"></path>
-                  </svg>
-                </span>
-                <span className="text-lg font-bold">3</span>
-              </a>
+              <Like onClick={handleLike} value={countLikes} isActivated={isLiked} />
             </div>
             <div className="relative">
               <input
