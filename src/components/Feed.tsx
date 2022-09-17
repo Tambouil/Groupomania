@@ -1,4 +1,5 @@
-import { PropsWithChildren } from 'react'
+import { PropsWithChildren, useEffect } from 'react'
+import { useCommentsContext } from '../hooks/useCommentsContext'
 import { PostData } from '../types/interfaces'
 import Posts from './Posts'
 
@@ -7,6 +8,20 @@ interface Props {
 }
 
 const Feed = ({ posts, children }: PropsWithChildren<Props>) => {
+  const { state, dispatch } = useCommentsContext()
+  useEffect(() => {
+    const fetchComments = async () => {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/allcomments`, {
+        credentials: 'include',
+      })
+      const data = await res.json()
+      if (res.ok) {
+        dispatch({ type: 'SET_COMMENTS', payload: data })
+      }
+    }
+    fetchComments()
+  }, [dispatch])
+
   return (
     <div className="container mx-auto">
       {children}
@@ -19,7 +34,7 @@ const Feed = ({ posts, children }: PropsWithChildren<Props>) => {
           </p>
         </div>
       ) : (
-        posts.map((post: PostData) => <Posts key={post.id} post={post} />)
+        posts.map((post: PostData) => <Posts key={post.id} post={post} comments={state.comments} />)
       )}
     </div>
   )

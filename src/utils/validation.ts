@@ -23,7 +23,12 @@ export const userSchema = yup.object({
   username: yup.string().required().min(3).max(30),
 })
 
+export const commentSchema = yup.object({
+  content: yup.string().required().min(3).max(255),
+})
+
 export type LoginInput = yup.InferType<typeof loginSchema>
 export type RegisterInput = yup.InferType<typeof registerSchema>
 export type PostInput = yup.InferType<typeof postSchema>
 export type UserValues = yup.InferType<typeof userSchema>
+export type CommentInput = yup.InferType<typeof commentSchema>

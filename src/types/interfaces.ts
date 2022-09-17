@@ -1,4 +1,4 @@
-import { PostInput, UserValues } from '../utils/validation'
+import { CommentInput, PostInput, UserValues } from '../utils/validation'
 
 export interface UserData extends UserValues {
   id: number
@@ -24,6 +24,13 @@ export interface LikeData {
 }
 
 export interface LikeData {
+  user_id: number
+  post_id: number
+}
+
+export interface CommentData extends CommentInput {
+  id: number
+  created_at: string
   user_id: number
   post_id: number
 }
