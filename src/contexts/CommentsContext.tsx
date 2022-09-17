@@ -1,22 +1,15 @@
 import { createContext, Dispatch, PropsWithChildren, useReducer } from 'react'
-
-export interface Comment {
-  id: number
-  content: string
-  post_id: number
-  user_id: number
-  created_at: string
-}
+import { CommentData } from '../types/interfaces'
 
 export interface CommentsState {
-  comments: Comment[]
+  comments: CommentData[]
 }
 
 export type CommentsAction =
-  | { type: 'SET_COMMENTS'; payload: Comment[] }
-  | { type: 'ADD_COMMENT'; payload: Comment }
-  | { type: 'UPDATE_COMMENT'; payload: Comment }
-  | { type: 'DELETE_COMMENT'; payload: Comment }
+  | { type: 'SET_COMMENTS'; payload: CommentData[] }
+  | { type: 'ADD_COMMENT'; payload: CommentData }
+  | { type: 'UPDATE_COMMENT'; payload: CommentData }
+  | { type: 'DELETE_COMMENT'; payload: CommentData }
 
 const initialState: CommentsState = {
   comments: [],

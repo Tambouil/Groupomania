@@ -1,25 +1,15 @@
 import { createContext, PropsWithChildren, useReducer } from 'react'
-
-export interface Post {
-  id: number
-  content: string
-  thumbnail: {
-    url: string
-  }
-  created_at: string
-  updated_at: string
-  user_id: number
-}
+import { PostData } from '../types/interfaces'
 
 export interface PostsState {
-  posts: Post[]
+  posts: PostData[]
 }
 
 export type PostsAction =
-  | { type: 'SET_POSTS'; payload: Post[] }
-  | { type: 'ADD_POST'; payload: Post }
-  | { type: 'UPDATE_POST'; payload: Post }
-  | { type: 'DELETE_POST'; payload: Post }
+  | { type: 'SET_POSTS'; payload: PostData[] }
+  | { type: 'ADD_POST'; payload: PostData }
+  | { type: 'UPDATE_POST'; payload: PostData }
+  | { type: 'DELETE_POST'; payload: PostData }
 
 const initialState: PostsState = {
   posts: [],

@@ -1,22 +1,11 @@
 import { createContext, PropsWithChildren, useEffect, useReducer } from 'react'
-
-export interface User {
-  id: number
-  username: string
-  email: string
-  avatar: {
-    url: string
-  }
-  role: number
-  created_at: string
-  updated_at: string
-}
+import { UserData } from '../types/interfaces'
 
 export interface AuthState {
-  user: User | null
+  user: UserData | null
 }
 
-export type AuthAction = { type: 'LOGIN'; payload: User } | { type: 'LOGOUT' }
+export type AuthAction = { type: 'LOGIN'; payload: UserData } | { type: 'LOGOUT' }
 
 const initialState: AuthState = {
   user: null,
