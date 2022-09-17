@@ -19,6 +19,7 @@ const Comments = ({ comment, post_id }: Props) => {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { isSubmitting, errors },
   } = useForm<CommentInput>({
     defaultValues: {
@@ -86,16 +87,23 @@ const Comments = ({ comment, post_id }: Props) => {
 
   return (
     <>
-      <div className="flex-col w-full py-4 bg-white border-b-2 border-r-2 border-gray-200 sm:px-4 sm:py-4 md:px-4 sm:rounded-lg sm:shadow-sm">
+      <div className="flex-col w-full py-4 mb-2 bg-white border-b-2 border-r-2 border-gray-200 sm:px-4 sm:py-4 md:px-4 sm:rounded-lg sm:shadow-sm">
         <div className="flex">
           {comment && user ? (
-            <div className="flex flex-col items-center mr-4">
-              <img
-                className="object-cover w-12 h-12 border-2 border-gray-300 rounded-full"
-                alt="Noob master's avatar"
-                src="https://images.unsplash.com/photo-1517070208541-6ddc4d3efbcb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&faces=1&faceindex=1&facepad=2.5&w=500&h=500&q=80"
-              />
-              <div className="text-xs text-center text-gray-500">{user.username}</div>
+            <div className="flex items-center mr-4">
+              {user.avatar ? (
+                <img
+                  className="object-cover w-12 h-12 border-2 border-gray-300 rounded-full"
+                  alt="avatar"
+                  src={user.avatar.url}
+                />
+              ) : (
+                <div className="avatar placeholder">
+                  <div className="bg-neutral-focus text-neutral-content rounded-full w-12">
+                    {user?.username?.charAt(0).toUpperCase()}
+                  </div>
+                </div>
+              )}
             </div>
           ) : (
             <div className="flex flex-col items-center mr-4">
@@ -106,78 +114,148 @@ const Comments = ({ comment, post_id }: Props) => {
               </div>
             </div>
           )}
-
           <div className="flex flex-col">
             <div className="flex items-center space-x-2">
               {updateMode ? (
-                <form className="flex justify-between" onSubmit={handleSubmit(onSubmit)}>
-                  <input
-                    type="text"
-                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-gray-500"
-                    placeholder="Write a comment..."
-                    {...register('content')}
-                  />
-
-                  {comment ? (
-                    <div className="flex items-center">
-                      <button
-                        className="btn btn-outline btn-ghost mr-2"
-                        onClick={() => {
-                          reset(), setUpdateMode(false)
-                        }}
-                      >
+                <form className="flex flex-col w-full" onSubmit={handleSubmit(onSubmit)}>
+                  <div className="flex items-center justify-between space-x-2 w-full">
+                    <input
+                      type="text"
+                      className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-gray-500"
+                      placeholder="Write a comment..."
+                      {...register('content')}
+                    />
+                    {comment && (
+                      <button className="btn btn-sm" onClick={() => setUpdateMode(false)}>
                         Cancel
                       </button>
-                      <button type="submit" className="btn btn-accent" disabled={isSubmitting}>
-                        {isSubmitting ? 'Saving...' : 'Save'}
+                    )}
+                    {isSubmitting ? (
+                      <button className=" bg-slate-300 rounded-full cursor-pointer hover:bg-slate-400 p-4">
+                        Submitting...
                       </button>
+                    ) : (
+                      <button className=" bg-slate-300 rounded-full cursor-pointer hover:bg-slate-400 p-4">
+                        <svg
+                          className="w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"
+                          />
+                        </svg>
+                      </button>
+                    )}
+                  </div>
+                  {errors.content && (
+                    <div className="alert alert-error shadow-lg">
+                      <div>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="stroke-current flex-shrink-0 h-6 w-6"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                        <span>{errors.content?.message}</span>
+                      </div>
                     </div>
-                  ) : (
-                    <button type="submit" className="btn btn-accent" disabled={isSubmitting}>
-                      {isSubmitting ? 'Posting...' : 'Post'}
-                    </button>
                   )}
                 </form>
               ) : (
-                <div className="flex-col mt-1">
-                  <div className="flex items-center flex-1 px-4 font-bold leading-tight">
-                    {comment && user ? user.username : ''}
-                    <span className="ml-2 text-xs font-normal text-gray-500">
-                      <TimeAgo
-                        datetime={comment ? comment.created_at : new Date().toLocaleString()}
-                        locale="en_US"
-                      />
-                    </span>
+                <div className="flex flex-col w-full">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-4">
+                      {comment && (
+                        <>
+                          <div className="text-sm font-medium text-gray-900">
+                            {comment ? user?.username : authUser?.username}
+                          </div>
+                          <TimeAgo
+                            className="text-xs font-normal text-gray-500"
+                            datetime={comment.created_at}
+                          />
+                        </>
+                      )}
+                      {(isAuthor || isAdmin) && (
+                        <div className="flex items-center space-x-2">
+                          <button
+                            type="button"
+                            className="text-sm font-medium text-gray-500 hover:text-gray-900"
+                            onClick={() => setUpdateMode(true)}
+                          >
+                            <svg
+                              className="w-4 h-4 hover:stroke-orange-400"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                              />
+                            </svg>
+                          </button>
+                          <button
+                            type="button"
+                            className="text-sm font-medium text-gray-500 hover:text-gray-900"
+                            onClick={handleDelete}
+                          >
+                            <svg
+                              className="w-4 h-4 hover:stroke-red-500"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                  <div className="flex-1 px-2 ml-2 text-sm font-medium leading-loose text-gray-600">
-                    {comment?.content}
+                  <div className="mt-1 text-sm text-gray-700">
+                    {updateMode ? (
+                      <input
+                        type="text"
+                        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-gray-500"
+                        placeholder="Write a comment..."
+                        {...register('content')}
+                      />
+                    ) : (
+                      <p>{comment ? comment.content : watch('content')}</p>
+                    )}
                   </div>
                 </div>
               )}
             </div>
           </div>
-
-          {comment && (isAuthor || isAdmin) && (
-            <div className="justify-end">
-              <button
-                className="text-xs text-gray-500"
-                onClick={() => setUpdateMode((prev) => !prev)}
-              >
-                {updateMode ? 'Cancel' : 'Edit'}
-              </button>
-              <button
-                className="text-xs text-red-500"
-                onClick={handleDelete}
-                disabled={isSubmitting}
-              >
-                Delete
-              </button>
-            </div>
-          )}
         </div>
       </div>
     </>
   )
 }
+//
 
 export default Comments

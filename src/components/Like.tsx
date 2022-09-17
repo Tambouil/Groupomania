@@ -13,7 +13,7 @@ const Like = ({ value, isActivated, onClick }: Props) => {
       >
         <svg
           className={`w-4 h-4 ${isActivated ? 'text-error' : 'text-gray-500'}`}
-          fill="none"
+          fill={isActivated ? 'currentColor' : 'none'}
           stroke="currentColor"
           viewBox="0 0 24 24"
           xmlns="http://www.w3.org/2000/svg"

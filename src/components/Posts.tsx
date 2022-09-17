@@ -140,7 +140,7 @@ const Posts = ({ post, comments }: Props) => {
   }
 
   return (
-    <article className="mb-4 p-6 rounded-xl bg-white dark:bg-slate-800 flex flex-col  border border-slate-400 bg-clip-border w-3/4 mx-auto">
+    <article className="mb-4 mt-8 p-6 rounded-xl bg-white dark:bg-slate-800 flex flex-col border border-slate-400 bg-clip-border w-3/4 mx-auto">
       <div className="flex pb-6 items-center justify-between">
         <Avatar user={user} />
         <div className="flex flex-col">
@@ -188,21 +188,23 @@ const Posts = ({ post, comments }: Props) => {
               {...register('content', { required: true })}
             />
             {errors.content && (
-              <div className="alert alert-warning shadow-lg mt-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="stroke-current flex-shrink-0 h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                  />
-                </svg>
-                {errors.content?.message}
+              <div className="alert alert-error shadow-lg">
+                <div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="stroke-current flex-shrink-0 h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  <span>{errors.content?.message}</span>
+                </div>
               </div>
             )}
 
@@ -259,7 +261,7 @@ const Posts = ({ post, comments }: Props) => {
           <div className="flex flex-col">
             <p className="text-lg font-bold">{post.content}</p>
             <div className="divider"></div>
-            <div className="pb-4 flex justify-between">
+            <div className="flex justify-between">
               <TimeAgo datetime={post.created_at} />
               <Like onClick={handleLike} value={countLikes} isActivated={isLiked} />
             </div>
