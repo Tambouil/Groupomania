@@ -8,11 +8,7 @@ const AuthLayout = () => {
       </div>
 
       <div className="relative w-full h-64 sm:h-96 lg:w-1/2 lg:h-full">
-        <img
-          className="absolute inset-0 object-cover w-full h-full"
-          src="https://www.hyperui.dev/photos/team-1.jpeg"
-          alt=""
-        />
+        <img className="absolute inset-0 object-cover w-full h-full" src="images/auth.jpg" alt="" />
       </div>
     </section>
   )
