@@ -11,7 +11,14 @@ interface FormInput extends UserValues {
 const UserSettings = () => {
   const { state, dispatch } = useAuthContext()
   const authUser = state.user
-  const { register, watch, control, handleSubmit } = useForm<FormInput>({
+  const {
+    register,
+    watch,
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormInput>({
     defaultValues: {
       username: authUser?.username,
     },
@@ -30,8 +37,8 @@ const UserSettings = () => {
     )
     const json = await response.json()
     if (response.ok) {
-      console.log(json)
       dispatch({ type: 'UPDATE', payload: json })
+      reset()
     }
   }
 
@@ -99,6 +106,9 @@ const UserSettings = () => {
               type="text"
               {...register('username')}
             />
+            {errors.username && (
+              <span className="text-sm text-red-500">{errors.username.message}</span>
+            )}
           </div>
           <div className="flex justify-end">
             <button type="submit" className="btn btn-primary mt-4">
