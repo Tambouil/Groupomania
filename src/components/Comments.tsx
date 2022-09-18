@@ -95,7 +95,7 @@ const Comments = ({ comment, post_id }: Props) => {
                 <img
                   className="object-cover w-12 h-12 border-2 border-gray-300 rounded-full"
                   alt="avatar"
-                  src={user.avatar.url}
+                  src={`${import.meta.env.VITE_API_URL}${user.avatar.url}`}
                 />
               ) : (
                 <div className="avatar placeholder">
@@ -109,7 +109,17 @@ const Comments = ({ comment, post_id }: Props) => {
             <div className="flex flex-col items-center mr-4">
               <div className="avatar placeholder">
                 <div className="bg-neutral-focus text-neutral-content rounded-full w-12">
-                  {authUser?.username?.charAt(0).toUpperCase()}
+                  {authUser?.avatar?.url ? (
+                    <img
+                      className="object-cover w-12 h-12 border-2 border-gray-300 rounded-full"
+                      alt="avatar"
+                      src={`${import.meta.env.VITE_API_URL}${authUser.avatar.url}`}
+                    />
+                  ) : (
+                    <div className="flex items-center justify-center w-12 h-12">
+                      {authUser?.username?.charAt(0)}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

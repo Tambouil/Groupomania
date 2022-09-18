@@ -1,4 +1,5 @@
 import { useAuthContext } from '../hooks/useAuthContext'
+import UserSettings from './UserSettings'
 
 const Navbar = () => {
   const { state, dispatch } = useAuthContext()
@@ -13,16 +14,25 @@ const Navbar = () => {
   }
 
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-base-100 px-6">
       <div className="flex-1">
         <a className="btn btn-ghost normal-case text-xl">Groupomania</a>
       </div>
-      <div className="flex-none gap-2">
+      <div className="flex-none gap-4">
         <span className="badge">{state.user?.username}</span>
         <div className="dropdown dropdown-end">
-          <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-            <div className="w-10 rounded-full">
-              <img src="https://placeimg.com/80/80/people" />
+          <label tabIndex={0}>
+            <div className="avatar placeholder w-12">
+              {state.user?.avatar ? (
+                <img
+                  className="object-cover w-4 h-4 border-2 border-gray-300 rounded-full"
+                  src={`${import.meta.env.VITE_API_URL}${state.user.avatar.url}`}
+                />
+              ) : (
+                <div className="bg-neutral-focus text-neutral-content rounded-full w-12">
+                  {state.user?.username?.charAt(0).toUpperCase()}
+                </div>
+              )}
             </div>
           </label>
           <ul
@@ -49,7 +59,7 @@ const Navbar = () => {
               </button>
             </li>
             <li>
-              <button>
+              <label htmlFor="my-modal">
                 <svg
                   className="w-4 h-4"
                   fill="none"
@@ -65,7 +75,7 @@ const Navbar = () => {
                   />
                 </svg>
                 Settings
-              </button>
+              </label>
             </li>
             <li>
               <button onClick={logout}>
@@ -87,6 +97,15 @@ const Navbar = () => {
               </button>
             </li>
           </ul>
+        </div>
+      </div>
+      <input type="checkbox" id="my-modal" className="modal-toggle" />
+      <div className="modal">
+        <div className="modal-box relative">
+          <label htmlFor="my-modal" className="btn btn-sm btn-circle absolute right-2 top-2">
+            ✕
+          </label>
+          <UserSettings />
         </div>
       </div>
     </div>

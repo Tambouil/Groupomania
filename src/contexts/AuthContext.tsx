@@ -5,7 +5,10 @@ export interface AuthState {
   user: UserData | null
 }
 
-export type AuthAction = { type: 'LOGIN'; payload: UserData } | { type: 'LOGOUT' }
+export type AuthAction =
+  | { type: 'LOGIN'; payload: UserData }
+  | { type: 'LOGOUT' }
+  | { type: 'UPDATE'; payload: UserData }
 
 const initialState: AuthState = {
   user: null,
@@ -17,6 +20,8 @@ const reducer = (state: AuthState, action: AuthAction) => {
       return { ...state, user: action.payload }
     case 'LOGOUT':
       return { ...state, user: null }
+    case 'UPDATE':
+      return { ...state, user: action.payload }
     default:
       return state
   }
