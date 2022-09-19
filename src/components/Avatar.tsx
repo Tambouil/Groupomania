@@ -29,9 +29,9 @@ const Avatar = ({ user }: Props) => {
           </div>
         )}
       </div>
-      <a className="inline-block text-lg font-bold ml-4 mr-2" href="#">
-        {user?.username}
-      </a>
+      <span className="inline-block text-lg font-bold ml-4 mr-2">
+        {user ? user?.username : state.user?.username}
+      </span>
       {isAdmin && (
         <span>
           <svg

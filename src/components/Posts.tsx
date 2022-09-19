@@ -10,6 +10,7 @@ import Avatar from './Avatar'
 import { useAuthContext } from '../hooks/useAuthContext'
 import Like from './Like'
 import Comments from './Comments'
+import { Link } from 'react-router-dom'
 
 interface Props {
   post?: PostData
@@ -42,6 +43,7 @@ const Posts = ({ post, comments }: Props) => {
   const [countLikes, setCountLikes] = useState(0)
   const thumbnailToUpload = watch('thumbnailFile')
   const authUser = state.user
+  // const author = post?.user
   const isAuthor = authUser?.id === post?.user_id
   const isAdmin = authUser?.role === 0
 
@@ -142,7 +144,9 @@ const Posts = ({ post, comments }: Props) => {
   return (
     <article className="mb-4 mt-8 p-6 rounded-xl bg-white dark:bg-slate-800 flex flex-col border border-slate-400 bg-clip-border w-3/4 mx-auto">
       <div className="flex pb-6 items-center justify-between">
-        <Avatar user={user} />
+        <Link to={user ? `/users/${user?.id}` : `/users/${state.user?.id}`}>
+          <Avatar user={user} />
+        </Link>
         <div className="flex flex-col">
           <div className="flex items-center">
             {!updateMode && (isAuthor || isAdmin) && (

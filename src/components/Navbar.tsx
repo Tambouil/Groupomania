@@ -1,5 +1,8 @@
+import { Link } from 'react-router-dom'
 import { useAuthContext } from '../hooks/useAuthContext'
 import UserSettings from './UserSettings'
+import logo from '../assets/logo.svg'
+import logo_white from '../assets/logo-white.svg'
 
 const Navbar = () => {
   const { state, dispatch } = useAuthContext()
@@ -16,7 +19,22 @@ const Navbar = () => {
   return (
     <div className="navbar bg-base-100 px-6">
       <div className="flex-1">
-        <a className="btn btn-ghost normal-case text-xl">Groupomania</a>
+        <div className="flex items-center">
+          <div className="flex-shrink-0">
+            <picture>
+              <source srcSet={logo_white} media="(prefers-color-scheme: dark)" />
+              <img className="w-40 dark:fill-white" src={logo} alt="logo" />
+            </picture>
+          </div>
+        </div>
+      </div>
+      <div className="flex-1">
+        <Link to="/" className="btn btn-ghost btn-sm rounded-btn" aria-label="Home">
+          Home
+        </Link>
+        <Link to="/users" className="btn btn-ghost btn-sm rounded-btn" aria-label="users">
+          Users
+        </Link>
       </div>
       <div className="flex-none gap-4">
         <span className="badge">{state.user?.username}</span>
@@ -40,7 +58,7 @@ const Navbar = () => {
             className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
           >
             <li>
-              <button>
+              <Link to={`/users/${state.user?.id}`}>
                 <svg
                   className="w-4 h-4"
                   fill="none"
@@ -56,7 +74,7 @@ const Navbar = () => {
                   />
                 </svg>
                 Profile
-              </button>
+              </Link>
             </li>
             <li>
               <label htmlFor="my-modal">
