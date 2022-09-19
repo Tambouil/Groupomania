@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom'
+import AuthImage from '../assets/auth.jpg'
 
 const AuthLayout = () => {
   return (
@@ -8,7 +9,11 @@ const AuthLayout = () => {
       </div>
 
       <div className="relative w-full h-64 sm:h-96 lg:w-1/2 lg:h-full">
-        <img className="absolute inset-0 object-cover w-full h-full" src="images/auth.jpg" alt="" />
+        <img
+          className="absolute inset-0 object-cover w-full h-full"
+          src={AuthImage}
+          alt="building"
+        />
       </div>
     </section>
   )
