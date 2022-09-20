@@ -33,3 +33,8 @@ export interface CommentData extends CommentInput {
   created_at: string
   updated_at: string
 }
+
+export interface FollowData {
+  user_id: number
+  following_id: number
+}
