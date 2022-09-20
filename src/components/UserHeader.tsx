@@ -10,14 +10,22 @@ const UserHeader = ({ user, postCount }: Props) => {
     <main className="bg-gray-100 bg-opacity-25">
       <div className="lg:w-8/12 lg:mx-auto mb-8">
         <header className="flex flex-wrap items-center p-4 md:py-8">
-          <div className="md:w-3/12 md:ml-16">
-            <img
-              className="w-20 h-20 md:w-40 md:h-40 object-cover rounded-full
-                     border-2 border-pink-600 p-1"
-              src={`${import.meta.env.VITE_API_URL}${user?.avatar?.url}`}
-              alt="profile"
-            />
-          </div>
+          {user?.avatar ? (
+            <div className="md:w-3/12 md:ml-16">
+              <img
+                className="w-20 h-20 md:w-40 md:h-40 object-cover rounded-full
+              border-2 border-pink-600 p-1"
+                src={`${import.meta.env.VITE_API_URL}${user?.avatar?.url}`}
+                alt="profile"
+              />
+            </div>
+          ) : (
+            <div className="avatar placeholder w-20">
+              <div className="bg-neutral-focus text-neutral-content rounded-full w-20">
+                {user?.username.charAt(0).toUpperCase()}
+              </div>
+            </div>
+          )}
 
           <div className="w-8/12 md:w-7/12 ml-4">
             <div className="md:flex md:items-center mb-4">
