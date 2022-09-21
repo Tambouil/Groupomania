@@ -30,11 +30,11 @@ const FileInput = ({ name, control }: Props) => {
   return (
     <>
       <div className="btn-group">
-        <div className="btn gap-2" onClick={onClick}>
+        <div className="btn btn-sm sm:btn-md gap-2" onClick={onClick}>
           Image
         </div>
         {value?.length > 0 && (
-          <div className="btn" onClick={onDelete}>
+          <div className="btn btn-sm sm:btn-md" onClick={onDelete}>
             ✕
           </div>
         )}

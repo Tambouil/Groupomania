@@ -141,10 +141,10 @@ const Posts = ({ post, comments }: Props) => {
   }
 
   return (
-    <article className="mb-4 p-6 rounded-xl bg-white dark:bg-slate-800 flex flex-col bg-clip-border w-3/4 mx-auto shadow-2xl">
+    <article className="mb-4 p-6 rounded-xl bg-white dark:bg-slate-800 text-slate-800 dark:text-white flex flex-col bg-clip-border w-3/4 mx-auto shadow-2xl">
       <div className="flex pb-6 items-center justify-between">
         <Link to={user ? `/users/${user?.id}` : `/users/${state.user?.id}`}>
-          <Avatar user={user} />
+          {post ? <Avatar user={user} /> : <Avatar user={state.user} />}
         </Link>
         <div className="flex flex-col">
           <div className="flex items-center">
@@ -233,7 +233,7 @@ const Posts = ({ post, comments }: Props) => {
 
             <div className="divider"></div>
 
-            <div className="flex items-center justify-between">
+            <div className="flex flex-wrap items-center justify-between">
               <div className="flex items-center">
                 {post?.thumbnail ? (
                   <button className="btn gap-2" onClick={handleDeleteThumbnail}>
@@ -258,16 +258,20 @@ const Posts = ({ post, comments }: Props) => {
                 )}
               </div>
               {post ? (
-                <div className="flex items-center">
+                <div className="flex items-center mt-2 sm:mt-0">
                   <button
-                    className="btn btn-outline btn-ghost mr-2"
+                    className="btn btn-outline btn-ghost btn-xs sm:btn-sm md:btn-md mr-2"
                     onClick={() => {
                       reset(), setUpdateMode(false)
                     }}
                   >
                     Annuler
                   </button>
-                  <button type="submit" className="btn btn-accent" disabled={isSubmitting}>
+                  <button
+                    type="submit"
+                    className="btn btn-accent btn-xs sm:btn-sm md:btn-md"
+                    disabled={isSubmitting}
+                  >
                     {isSubmitting ? 'Sauvegarde...' : 'Enregistrer'}
                   </button>
                 </div>

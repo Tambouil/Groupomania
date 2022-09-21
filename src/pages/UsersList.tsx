@@ -17,7 +17,7 @@ const Users = () => {
   }, [])
 
   return (
-    <div className="bg-slate-200 h-screen">
+    <div className="bg-slate-200 min-h-screen">
       <Navbar />
       <div className="container mx-auto px-6 py-8">
         <h3 className="text-gray-700 text-2xl font-medium">Tous les utilisateurs</h3>

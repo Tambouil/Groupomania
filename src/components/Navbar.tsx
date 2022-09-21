@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useAuthContext } from '../hooks/useAuthContext'
 import UserSettings from './UserSettings'
 import logo from '../assets/logo.svg'
+import logo_white from '../assets/logo-white.svg'
 
 const Navbar = () => {
   const { state, dispatch } = useAuthContext()
@@ -19,7 +20,10 @@ const Navbar = () => {
     <div className="navbar bg-base-100 px-6">
       <div className="flex-1">
         <div className="flex items-center">
-          <img className="w-40" src={logo} alt="logo" />
+          <picture>
+            <source srcSet={logo_white} media="(prefers-color-scheme: dark)" />
+            <img className="w-40 dark:fill-white" src={logo} alt="logo" />
+          </picture>
         </div>
       </div>
       <div className="flex-1">

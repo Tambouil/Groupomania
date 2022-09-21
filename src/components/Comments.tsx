@@ -147,7 +147,7 @@ const Comments = ({ comment, post_id }: Props) => {
                     ) : (
                       <button className=" bg-slate-300 rounded-full cursor-pointer hover:bg-slate-400 p-4">
                         <svg
-                          className="w-4 h-4 "
+                          className="w-2 h2 sm:w-4 sm:h-4 "
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -196,6 +196,7 @@ const Comments = ({ comment, post_id }: Props) => {
                           <TimeAgo
                             className="text-xs font-normal text-gray-500"
                             datetime={comment.created_at}
+                            locale="fr"
                           />
                         </>
                       )}
