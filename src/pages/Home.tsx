@@ -3,7 +3,6 @@ import Feed from '../components/Feed'
 import Navbar from '../components/Navbar'
 import Posts from '../components/Posts'
 import { usePostsContext } from '../hooks/usePostsContext'
-import { CommentsProvider } from '../contexts/CommentsContext'
 
 const Home = () => {
   const { state, dispatch } = usePostsContext()
@@ -22,14 +21,12 @@ const Home = () => {
   }, [dispatch])
 
   return (
-    <div className="bg-slate-200 h-screen">
+    <div className="bg-slate-200 min-h-screen">
       <Navbar />
 
-      <CommentsProvider>
-        <Feed posts={state.posts}>
-          <Posts />
-        </Feed>
-      </CommentsProvider>
+      <Feed posts={state.posts}>
+        <Posts />
+      </Feed>
     </div>
   )
 }
