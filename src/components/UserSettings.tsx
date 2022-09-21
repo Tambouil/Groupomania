@@ -42,6 +42,16 @@ const UserSettings = () => {
     }
   }
 
+  const handleDeleteAccount = async () => {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/${authUser?.id}`, {
+      method: 'DELETE',
+      credentials: 'include',
+    })
+    if (response.ok) {
+      dispatch({ type: 'LOGOUT' })
+    }
+  }
+
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
     const formData = new FormData()
     formData.append('username', data.username)
@@ -61,7 +71,7 @@ const UserSettings = () => {
 
   return (
     <div className="flex flex-col justify-center space-y-4">
-      <h1 className="text-xl font-bold">User Settings</h1>
+      <h1 className="text-xl font-bold">Paramètres utilisateurs</h1>
       <div className="flex flex-col items-center justify-center w-2/3 mx-auto">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex items-center justify-between mt-4">
@@ -91,7 +101,7 @@ const UserSettings = () => {
                   className="btn btn-accent btn-sm"
                   onClick={handleAvatarDelete}
                 >
-                  Delete Avatar
+                  Supprimer avatar
                 </button>
               </div>
             ) : (
@@ -100,7 +110,7 @@ const UserSettings = () => {
           </div>
           <div className="divider"></div>
           <div className="flex flex-col justify-center mt-4">
-            <label className="text-sm text-gray-500 mb-2">Username</label>
+            <label className="text-sm text-gray-500 mb-2">Nom d'utilisateur</label>
             <input
               className="w-64 px-2 py-1 border border-gray-300 rounded-md"
               type="text"
@@ -110,9 +120,16 @@ const UserSettings = () => {
               <span className="text-sm text-red-500">{errors.username.message}</span>
             )}
           </div>
+          <div className="divider"></div>
           <div className="flex justify-end">
             <button type="submit" className="btn btn-primary mt-4">
-              Save
+              Enregistrer
+            </button>
+          </div>
+          <div className="divider"></div>
+          <div className="flex justify-center mt-8">
+            <button className="btn btn-error" onClick={handleDeleteAccount} type="submit">
+              Supprimer mon compte
             </button>
           </div>
         </form>
