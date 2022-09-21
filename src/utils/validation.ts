@@ -16,7 +16,7 @@ export const registerSchema = yup.object({
 })
 
 export const postSchema = yup.object({
-  content: yup.string().required().min(3).max(255),
+  content: yup.string().required().max(255),
 })
 
 export const userSchema = yup.object({
