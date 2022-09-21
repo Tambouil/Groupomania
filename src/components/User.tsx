@@ -27,7 +27,7 @@ const User = ({ user }: Props) => {
   }
 
   return (
-    <div className="flex items-center justify-between px-8 py-4 w-2/3 mx-auto bg-slate-200">
+    <div className="flex items-center justify-between px-8 py-4 w-2/3 mx-auto bg-slate-400 dark:bg-slate-700 shadow-2xl rounded-lg my-2">
       <div className="flex items-center">
         <Link to={`/users/${user.id}`}>
           <div className="avatar placeholder w-14 h-14">
@@ -61,7 +61,9 @@ const User = ({ user }: Props) => {
               </svg>
             )}
           </div>
-          <span className="text-sm text-gray-500">{followersCount} Abonnés</span>
+          <span className="text-sm text-gray-800 dark:text-slate-300">
+            {followersCount} Abonnés
+          </span>
         </div>
       </div>
       <div className="flex justify-end">

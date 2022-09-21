@@ -21,7 +21,7 @@ const Home = () => {
   }, [dispatch])
 
   return (
-    <div className="bg-slate-200 min-h-screen">
+    <div className="bg-slate-200 min-h-screen dark:bg-slate-400">
       <Navbar />
 
       <Feed posts={state.posts}>

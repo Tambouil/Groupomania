@@ -87,7 +87,7 @@ const Comments = ({ comment, post_id }: Props) => {
 
   return (
     <>
-      <div className="flex-col w-full py-4 mb-2 bg-white border-b-2 border-r-2 border-gray-200 sm:px-4 sm:py-4 md:px-4 sm:rounded-lg sm:shadow-sm">
+      <div className="flex-col w-full py-4 mb-2 bg-white dark:bg-zinc-300 border-b-2 border-r-2 border-gray-200 sm:px-4 sm:py-4 md:px-4 sm:rounded-lg sm:shadow-sm">
         <div className="flex">
           {comment && user ? (
             <div className="flex items-center mr-4">
@@ -141,11 +141,11 @@ const Comments = ({ comment, post_id }: Props) => {
                       </button>
                     )}
                     {isSubmitting ? (
-                      <button className=" bg-slate-300 rounded-full cursor-pointer hover:bg-slate-400 p-4">
+                      <button className=" bg-slate-300 rounded-full cursor-pointer hover:bg-slate-400 p-4 dark:bg-black dark:hover:bg-black">
                         Submitting...
                       </button>
                     ) : (
-                      <button className=" bg-slate-300 rounded-full cursor-pointer hover:bg-slate-400 p-4">
+                      <button className=" bg-slate-300 rounded-full cursor-pointer hover:bg-slate-400 p-4 dark:bg-black dark:hover:bg-black">
                         <svg
                           className="w-2 h2 sm:w-4 sm:h-4 "
                           fill="none"
