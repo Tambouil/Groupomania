@@ -2,7 +2,7 @@ import { useAuthContext } from '../hooks/useAuthContext'
 import { UserData } from '../types/interfaces'
 
 interface Props {
-  user?: UserData
+  user?: UserData | null
 }
 
 const Avatar = ({ user }: Props) => {
@@ -15,11 +15,6 @@ const Avatar = ({ user }: Props) => {
           <img
             className="w-12 h-12 rounded-full"
             src={`${import.meta.env.VITE_API_URL}${user?.avatar?.url}`}
-          />
-        ) : state.user?.avatar ? (
-          <img
-            className="object-cover w-4 h-4 border-2 border-gray-300 rounded-full"
-            src={`${import.meta.env.VITE_API_URL}${state.user.avatar.url}`}
           />
         ) : (
           <div className="bg-neutral-focus text-neutral-content rounded-full w-12">
