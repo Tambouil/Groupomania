@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom'
 import { useAuthContext } from '../hooks/useAuthContext'
 import UserSettings from './UserSettings'
 import logo from '../assets/logo.svg'
-import logo_white from '../assets/logo-white.svg'
 
 const Navbar = () => {
   const { state, dispatch } = useAuthContext()
@@ -20,12 +19,7 @@ const Navbar = () => {
     <div className="navbar bg-base-100 px-6">
       <div className="flex-1">
         <div className="flex items-center">
-          <div className="flex-shrink-0">
-            <picture>
-              <source srcSet={logo_white} media="(prefers-color-scheme: dark)" />
-              <img className="w-40 dark:fill-white" src={logo} alt="logo" />
-            </picture>
-          </div>
+          <img className="w-40" src={logo} alt="logo" />
         </div>
       </div>
       <div className="flex-1">
@@ -37,7 +31,7 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="flex-none gap-4">
-        <span className="badge">{state.user?.username}</span>
+        <span className="hidden sm:badge">{state.user?.username}</span>
         <div className="dropdown dropdown-end">
           <label tabIndex={0}>
             <div className="avatar placeholder w-12">

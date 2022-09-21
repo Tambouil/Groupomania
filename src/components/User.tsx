@@ -29,7 +29,7 @@ const User = ({ user }: Props) => {
             </div>
           )}
         </div>
-        <div className="ml-4">
+        <div className="hidden sm:block ml-4">
           <h1 className="text-xl font-semibold">{user.username}</h1>
           <span className="text-sm text-gray-500">{followersCount} Followers</span>
         </div>

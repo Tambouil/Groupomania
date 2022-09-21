@@ -17,7 +17,7 @@ const Users = () => {
   }, [])
 
   return (
-    <>
+    <div className="bg-slate-200 h-screen">
       <Navbar />
       <div className="container mx-auto px-6 py-8">
         <h3 className="text-gray-700 text-2xl font-medium">Users</h3>
@@ -31,7 +31,7 @@ const Users = () => {
           <p className="text-gray-700 text-center">No users found</p>
         </div>
       )}
-    </>
+    </div>
   )
 }
 

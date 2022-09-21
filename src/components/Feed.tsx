@@ -23,10 +23,10 @@ const Feed = ({ posts, children }: PropsWithChildren<Props>) => {
   }, [dispatch])
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto pt-8">
       {children}
       {posts.length < 1 ? (
-        <div className="mt-4 p-8 text-center border border-gray-200 rounded-lg">
+        <div className="mt-4 p-8 text-center border border-slate-400 rounded-lg">
           <h2 className="text-2xl font-medium">There's nothing here...</h2>
 
           <p className="mt-4 text-sm text-gray-500">

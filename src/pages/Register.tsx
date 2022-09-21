@@ -141,15 +141,15 @@ const Register = () => {
                 </svg>
               )}
             </span>
-            {errors.password && (
-              <div
-                className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
-                role="alert"
-              >
-                {errors.password?.message}
-              </div>
-            )}
           </div>
+          {errors.password && (
+            <div
+              className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+              role="alert"
+            >
+              {errors.password?.message}
+            </div>
+          )}
         </div>
         <div>
           <label htmlFor="password_confirmation" className="sr-only">
@@ -205,15 +205,15 @@ const Register = () => {
                 </svg>
               )}
             </span>
-            {errors.password_confirmation && (
-              <div
-                className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
-                role="alert"
-              >
-                {errors.password_confirmation?.message}
-              </div>
-            )}
           </div>
+          {errors.password_confirmation && (
+            <div
+              className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+              role="alert"
+            >
+              {errors.password_confirmation?.message}
+            </div>
+          )}
         </div>
         {error && (
           <div

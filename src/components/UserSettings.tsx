@@ -100,7 +100,7 @@ const UserSettings = () => {
           </div>
           <div className="divider"></div>
           <div className="flex flex-col justify-center mt-4">
-            <label className="text-sm text-gray-500">Username</label>
+            <label className="text-sm text-gray-500 mb-2">Username</label>
             <input
               className="w-64 px-2 py-1 border border-gray-300 rounded-md"
               type="text"

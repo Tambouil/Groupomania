@@ -42,7 +42,6 @@ const UserHeader = ({ user, postCount }: Props) => {
               </div>
             </div>
 
-            {/* <!-- user following for desktop only --> */}
             <ul className="hidden md:flex space-x-8 mb-4">
               <li>
                 <span className="font-semibold">{postCount}</span>{' '}
@@ -72,14 +71,13 @@ const UserHeader = ({ user, postCount }: Props) => {
         </header>
 
         <div className="px-px md:px-3">
-          {/* <!-- user following for mobile only --> */}
           <ul
             className="flex md:hidden justify-around space-x-8 border-t 
                 text-center p-2 text-gray-600 leading-snug text-sm"
           >
             <li>
-              <span className="font-semibold text-gray-800 block">136</span>
-              posts
+              <span className="font-semibold text-gray-800 block">{postCount}</span>{' '}
+              {postCount === 1 ? 'post' : 'posts'}
             </li>
 
             <li>
@@ -92,7 +90,6 @@ const UserHeader = ({ user, postCount }: Props) => {
             </li>
           </ul>
 
-          {/* <!-- insta features --> */}
           <ul
             className="flex items-center justify-around md:justify-center space-x-12  
                     uppercase tracking-widest font-semibold text-xs text-gray-600
@@ -100,7 +97,6 @@ const UserHeader = ({ user, postCount }: Props) => {
           >
             <li className="md:border-t md:border-gray-700 md:-mt-px md:text-gray-700">
               <div className="inline-block p-3">
-                <i className="fas fa-th-large text-xl md:text-xs"></i>
                 <span className="hidden md:inline dark:text-white">posts</span>
               </div>
             </li>

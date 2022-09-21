@@ -22,14 +22,15 @@ const Home = () => {
   }, [dispatch])
 
   return (
-    <>
+    <div className="bg-slate-200 h-screen">
       <Navbar />
+
       <CommentsProvider>
         <Feed posts={state.posts}>
           <Posts />
         </Feed>
       </CommentsProvider>
-    </>
+    </div>
   )
 }
 

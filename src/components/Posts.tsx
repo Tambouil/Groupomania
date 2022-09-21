@@ -43,7 +43,6 @@ const Posts = ({ post, comments }: Props) => {
   const [countLikes, setCountLikes] = useState(0)
   const thumbnailToUpload = watch('thumbnailFile')
   const authUser = state.user
-  // const author = post?.user
   const isAuthor = authUser?.id === post?.user_id
   const isAdmin = authUser?.role === 0
 
@@ -142,7 +141,7 @@ const Posts = ({ post, comments }: Props) => {
   }
 
   return (
-    <article className="mb-4 mt-8 p-6 rounded-xl bg-white dark:bg-slate-800 flex flex-col border border-slate-400 bg-clip-border w-3/4 mx-auto">
+    <article className="mb-4 p-6 rounded-xl bg-white dark:bg-slate-800 flex flex-col bg-clip-border w-3/4 mx-auto shadow-2xl">
       <div className="flex pb-6 items-center justify-between">
         <Link to={user ? `/users/${user?.id}` : `/users/${state.user?.id}`}>
           <Avatar user={user} />
@@ -180,6 +179,13 @@ const Posts = ({ post, comments }: Props) => {
                 : `${import.meta.env.VITE_API_URL}${post?.thumbnail?.url}`
             }
           />
+          {errors.thumbnailFile && (
+            <div className="alert alert-error shadow-lg mt-2">
+              <div>
+                <span>{errors.thumbnailFile?.message}</span>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
@@ -187,7 +193,7 @@ const Posts = ({ post, comments }: Props) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col">
             <textarea
-              className="w-full h-32 p-2 border border-gray-300 rounded-lg"
+              className="w-full h-32 p-2 border border-gray-300 rounded-lg dark:border-none dark:bg-slate-400 dark:text-white"
               placeholder="What's on your mind?"
               {...register('content', { required: true })}
             />
