@@ -31,7 +31,7 @@ const User = ({ user }: Props) => {
         </div>
         <div className="hidden sm:block ml-4">
           <h1 className="text-xl font-semibold">{user.username}</h1>
-          <span className="text-sm text-gray-500">{followersCount} Followers</span>
+          <span className="text-sm text-gray-500">{followersCount} Abonnés</span>
         </div>
       </div>
       {authUser && authUser.id !== user.id && (

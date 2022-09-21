@@ -32,7 +32,7 @@ const Login = () => {
     })
     const json = await response.json()
     if (!response.ok) {
-      setError('Invalid credentials')
+      setError("Nom d'utilisateur ou mot de passe incorrect")
     }
     if (response.ok) {
       dispatch({ type: 'LOGIN', payload: json })
@@ -41,7 +41,7 @@ const Login = () => {
 
   return (
     <>
-      <AuthHeader headerText={'No account ?'} linkText={'Register'} linkTo={'/register'} />
+      <AuthHeader headerText={'Pas de compte ?'} linkText={'Inscription'} linkTo={'/register'} />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="max-w-md p-8 mx-auto mt-8 mb-0 space-y-4 shadow-2xl"
@@ -54,7 +54,7 @@ const Login = () => {
           <input
             type="email"
             className="w-full p-4 pr-12 text-sm border-2 border-gray-200 rounded-lg shadow-sm focus:border-gray-900"
-            placeholder="Enter email"
+            placeholder="Entrer votre email"
             {...register('email', { required: true })}
           />
           {errors.email && (
@@ -75,7 +75,7 @@ const Login = () => {
             <input
               type={passwordShown ? 'text' : 'password'}
               className="w-full p-4 pr-12 text-sm border-2 border-gray-200 rounded-lg shadow-sm"
-              placeholder="Enter password"
+              placeholder="Entrer votre mot de passe"
               {...register('password', { required: true })}
             />
 
@@ -139,7 +139,7 @@ const Login = () => {
             {error}
           </div>
         )}
-        <AuthSubmit submitText={'Login'} />
+        <AuthSubmit submitText={'Connexion'} />
       </form>
     </>
   )

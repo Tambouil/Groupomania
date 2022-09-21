@@ -151,17 +151,30 @@ const Posts = ({ post, comments }: Props) => {
             {!updateMode && (isAuthor || isAdmin) && (
               <div className="dropdown dropdown-end">
                 <label tabIndex={0} className="btn btn-square">
-                  ☰
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
+                    />
+                  </svg>
                 </label>
                 <ul
                   tabIndex={0}
                   className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
                 >
                   <li>
-                    <span onClick={() => setUpdateMode(true)}>Edit</span>
+                    <span onClick={() => setUpdateMode(true)}>Modifier</span>
                   </li>
                   <li>
-                    <span onClick={handleDelete}>Delete</span>
+                    <span onClick={handleDelete}>Supprimer</span>
                   </li>
                 </ul>
               </div>
@@ -193,8 +206,8 @@ const Posts = ({ post, comments }: Props) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col">
             <textarea
-              className="w-full h-32 p-2 border border-gray-300 rounded-lg dark:border-none dark:bg-slate-400 dark:text-white"
-              placeholder="What's on your mind?"
+              className="w-full h-20 p-2 border border-gray-300 rounded-lg dark:border-none dark:bg-slate-400 dark:text-white"
+              placeholder={'Quoi de neuf ? ' + ' ' + authUser?.username}
               {...register('content', { required: true })}
             />
             {errors.content && (
@@ -224,7 +237,7 @@ const Posts = ({ post, comments }: Props) => {
               <div className="flex items-center">
                 {post?.thumbnail ? (
                   <button className="btn gap-2" onClick={handleDeleteThumbnail}>
-                    <span>Remove Photo</span>
+                    <span>Supprimer Image</span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="w-4 h-4 fill-blue-500 dark:fill-slate-50 "
@@ -252,15 +265,15 @@ const Posts = ({ post, comments }: Props) => {
                       reset(), setUpdateMode(false)
                     }}
                   >
-                    Cancel
+                    Annuler
                   </button>
                   <button type="submit" className="btn btn-accent" disabled={isSubmitting}>
-                    {isSubmitting ? 'Saving...' : 'Save'}
+                    {isSubmitting ? 'Sauvegarde...' : 'Enregistrer'}
                   </button>
                 </div>
               ) : (
                 <button type="submit" className="btn btn-accent" disabled={isSubmitting}>
-                  {isSubmitting ? 'Posting...' : 'Post'}
+                  {isSubmitting ? 'Publication...' : 'Publier'}
                 </button>
               )}
             </div>
@@ -272,7 +285,7 @@ const Posts = ({ post, comments }: Props) => {
             <p className="text-lg font-bold">{post.content}</p>
             <div className="divider"></div>
             <div className="flex justify-between">
-              <TimeAgo datetime={post.created_at} />
+              <TimeAgo datetime={post.created_at} locale="fr" />
               <Like onClick={handleLike} value={countLikes} isActivated={isLiked} />
             </div>
             <div className="divider"></div>

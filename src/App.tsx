@@ -7,10 +7,12 @@ import Register from './pages/Register'
 import UserProfile from './pages/UserProfile'
 import Users from './pages/UsersList'
 import ProtectedRoutes from './components/ProtectedRoutes'
-import { useEffect, useState } from 'react'
+import * as timeago from 'timeago.js'
+import fr from 'timeago.js/lib/lang/fr'
 
 function App() {
   const { state } = useAuthContext()
+  timeago.register('fr', fr)
 
   return (
     <>

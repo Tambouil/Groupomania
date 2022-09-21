@@ -27,10 +27,10 @@ const Feed = ({ posts, children }: PropsWithChildren<Props>) => {
       {children}
       {posts.length < 1 ? (
         <div className="mt-4 p-8 text-center border border-slate-400 rounded-lg">
-          <h2 className="text-2xl font-medium">There's nothing here...</h2>
+          <h2 className="text-2xl font-medium">Il n'y a rien ici...</h2>
 
           <p className="mt-4 text-sm text-gray-500">
-            Created posts will appear here, try creating one!
+            Les publications créées apparaîtront ici, essayez d'en créer une !
           </p>
         </div>
       ) : (

@@ -38,26 +38,26 @@ const UserHeader = ({ user, postCount }: Props) => {
                         text-white font-semibold text-sm rounded block text-center 
                         sm:inline-block"
               >
-                Follow
+                S'abonner
               </div>
             </div>
 
             <ul className="hidden md:flex space-x-8 mb-4">
               <li>
                 <span className="font-semibold">{postCount}</span>{' '}
-                {postCount === 1 ? 'post' : 'posts'}
+                {postCount === 1 ? 'publication' : 'publications'}
               </li>
 
               <li>
-                <span className="font-semibold">40.5k</span> followers
+                <span className="font-semibold">4k</span> abonnés
               </li>
               <li>
-                <span className="font-semibold">302</span> following
+                <span className="font-semibold">302</span> abonnements
               </li>
             </ul>
 
             <div className="hidden md:block">
-              <h1 className="font-semibold">Mr Travlerrr...</h1>
+              <h1 className="font-semibold">Développeur nomade</h1>
               <span>Travel, Nature and Music</span>
               <p>Lorem ipsum dolor sit amet consectetur</p>
             </div>
@@ -81,12 +81,12 @@ const UserHeader = ({ user, postCount }: Props) => {
             </li>
 
             <li>
-              <span className="font-semibold text-gray-800 block">40.5k</span>
-              followers
+              <span className="font-semibold text-gray-800 block">4k</span>
+              abonnés
             </li>
             <li>
               <span className="font-semibold text-gray-800 block">302</span>
-              following
+              abonnements
             </li>
           </ul>
 
@@ -97,7 +97,7 @@ const UserHeader = ({ user, postCount }: Props) => {
           >
             <li className="md:border-t md:border-gray-700 md:-mt-px md:text-gray-700">
               <div className="inline-block p-3">
-                <span className="hidden md:inline dark:text-white">posts</span>
+                <span className="hidden md:inline dark:text-white">publications</span>
               </div>
             </li>
           </ul>

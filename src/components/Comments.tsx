@@ -131,13 +131,13 @@ const Comments = ({ comment, post_id }: Props) => {
                   <div className="flex items-center justify-between space-x-2 w-full">
                     <input
                       type="text"
-                      className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-gray-500"
-                      placeholder="Write a comment..."
+                      className="text-sm w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-gray-500"
+                      placeholder="Ecrivez un commentaire..."
                       {...register('content')}
                     />
                     {comment && (
                       <button className="btn btn-sm" onClick={() => setUpdateMode(false)}>
-                        Cancel
+                        Annuler
                       </button>
                     )}
                     {isSubmitting ? (
@@ -147,7 +147,7 @@ const Comments = ({ comment, post_id }: Props) => {
                     ) : (
                       <button className=" bg-slate-300 rounded-full cursor-pointer hover:bg-slate-400 p-4">
                         <svg
-                          className="w-4 h-4"
+                          className="w-4 h-4 "
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -157,7 +157,7 @@ const Comments = ({ comment, post_id }: Props) => {
                             strokeLinecap="round"
                             strokeLinejoin="round"
                             strokeWidth={2}
-                            d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"
+                            d="M13 5l7 7-7 7M5 5l7 7-7 7"
                           />
                         </svg>
                       </button>
@@ -250,7 +250,7 @@ const Comments = ({ comment, post_id }: Props) => {
                       <input
                         type="text"
                         className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-gray-500"
-                        placeholder="Write a comment..."
+                        placeholder="Ecrivez un commentaire..."
                         {...register('content')}
                       />
                     ) : (

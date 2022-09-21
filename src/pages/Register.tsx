@@ -40,7 +40,7 @@ const Register = () => {
   }
   return (
     <>
-      <AuthHeader headerText={'Already have an account ?'} linkText={'Login'} linkTo={'/login'} />
+      <AuthHeader headerText={'Déjà inscrit ?'} linkText={'Connexion'} linkTo={'/login'} />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="max-w-md p-8 mx-auto mt-8 mb-0 space-y-4 shadow-2xl"
@@ -53,7 +53,7 @@ const Register = () => {
           <input
             type="text"
             className="w-full p-4 pr-12 text-sm border-2 border-gray-200 rounded-lg shadow-sm"
-            placeholder="Username"
+            placeholder="Entrer votre nom d'utilisateur"
             {...register('username', { required: true })}
           />
           {errors.username && (
@@ -74,7 +74,7 @@ const Register = () => {
           <input
             type="email"
             className="w-full p-4 pr-12 text-sm border-2 border-gray-200 rounded-lg shadow-sm"
-            placeholder="Enter email"
+            placeholder="Entrer votre email"
             {...register('email', { required: true })}
           />
           {errors.email && (
@@ -95,7 +95,7 @@ const Register = () => {
             <input
               type={passwordShown ? 'text' : 'password'}
               className="w-full p-4 pr-12 text-sm border-2 border-gray-200 rounded-lg shadow-sm"
-              placeholder="Enter password"
+              placeholder="Entrer votre mot de passe"
               {...register('password', { required: true })}
             />
 
@@ -159,7 +159,7 @@ const Register = () => {
             <input
               type={passwordShown ? 'text' : 'password'}
               className="w-full p-4 pr-12 text-sm border-2 border-gray-200 rounded-lg shadow-sm"
-              placeholder="Enter password"
+              placeholder="Confirmer votre mot de passe"
               {...register('password_confirmation', { required: true })}
             />
 
@@ -223,7 +223,7 @@ const Register = () => {
             {error}
           </div>
         )}
-        <AuthSubmit submitText={'Register'} />
+        <AuthSubmit submitText={'Inscription'} />
       </form>
     </>
   )
