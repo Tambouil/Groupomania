@@ -40,10 +40,12 @@ const Navbar = () => {
           <label tabIndex={0}>
             <div className="avatar placeholder w-12">
               {state.user?.avatar ? (
-                <img
-                  className="object-cover w-4 h-4 border-2 border-gray-300 rounded-full"
-                  src={`${import.meta.env.VITE_API_URL}${state.user.avatar.url}`}
-                />
+                <div className="avatar placeholder">
+                  <img
+                    className="object-cover w-4 h-4 border-2 border-gray-300 rounded-full"
+                    src={`${import.meta.env.VITE_API_URL}${state.user.avatar.url}`}
+                  />
+                </div>
               ) : (
                 <div className="bg-neutral-focus text-neutral-content rounded-full w-12">
                   {state.user?.username?.charAt(0).toUpperCase()}

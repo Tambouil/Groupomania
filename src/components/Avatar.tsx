@@ -12,10 +12,12 @@ const Avatar = ({ user }: Props) => {
     <div className="flex items-center">
       <div className="avatar placeholder w-12">
         {user?.avatar ? (
-          <img
-            className="w-12 h-12 rounded-full"
-            src={`${import.meta.env.VITE_API_URL}${user?.avatar?.url}`}
-          />
+          <div className="avatar placeholder">
+            <img
+              className="w-12 h-12 rounded-full"
+              src={`${import.meta.env.VITE_API_URL}${user?.avatar?.url}`}
+            />
+          </div>
         ) : (
           <div className="bg-neutral-focus text-neutral-content rounded-full w-12">
             {user
