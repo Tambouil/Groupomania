@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { useAuthContext } from '../hooks/useAuthContext'
 import { userSchema, UserValues } from '../utils/validation'
 import FileInput from './FileInput'
@@ -11,6 +12,7 @@ interface FormInput extends UserValues {
 const UserSettings = () => {
   const { state, dispatch } = useAuthContext()
   const authUser = state.user
+  const navigate = useNavigate()
   const {
     register,
     watch,
@@ -39,16 +41,6 @@ const UserSettings = () => {
     if (response.ok) {
       dispatch({ type: 'UPDATE', payload: json })
       reset()
-    }
-  }
-
-  const handleDeleteAccount = async () => {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/${authUser?.id}`, {
-      method: 'DELETE',
-      credentials: 'include',
-    })
-    if (response.ok) {
-      dispatch({ type: 'LOGOUT' })
     }
   }
 
@@ -124,12 +116,6 @@ const UserSettings = () => {
           <div className="flex justify-end">
             <button type="submit" className="btn btn-primary mt-4">
               Enregistrer
-            </button>
-          </div>
-          <div className="divider"></div>
-          <div className="flex justify-center mt-8">
-            <button className="btn btn-error" onClick={handleDeleteAccount} type="submit">
-              Supprimer mon compte
             </button>
           </div>
         </form>
