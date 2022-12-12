@@ -3,6 +3,13 @@
 
 Frontend part of Groupomania. A fully featured social network.
 
+![Groupomania Login](/src/assets/screenshots/login.jpg "Optional title")
+
+![Groupomania Home](/src/assets/screenshots/home.jpg "Optional title")
+
+![Groupomania Profile](/src/assets/screenshots/profile.jpg "Optional title")
+
+
 
 ## Features
 
